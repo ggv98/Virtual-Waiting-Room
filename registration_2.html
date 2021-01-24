@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="css/registration.css">
+        <script src='script/check_session.js'></script>
+        <script defer src='script/registration_2.js'></script>
+
+
+        <title>User Info Step 2</title>
+    </head>
+
+    <body>
+        <main>
+
+            <div class="img">
+                <img class="center" src="img/logo1.png" />
+            </div>
+
+
+            <div class="wrapbtn">
+                <button class="progress-icon">1</button>
+                <button class="progress-icon" id="two">2</button>
+            </div>
+
+            <div class="wrapnfo">
+                <h1>Качете профилна снимка</h1>
+                
+                <img src="img/profilepic.png" alt="profilepic" id="profilepic">
+
+                <form class="vertical" id='image-upload'>
+                    <label for="name" id="choose">Избери снимка</label>
+                    <input type="file" name="image" title=""> <br> <br>
+                    <input type="submit" id="user-image-submit" class="next" name="upload" value="Качи снимка">
+                </form>
+
+
+            </div>
+        </main>
+
+    </body>
+</html>

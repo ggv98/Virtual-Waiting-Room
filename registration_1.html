@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="css/registration.css">
+        <script src='script/check_session.js'></script>
+        <script defer src='script/registration_1.js'></script>
+
+        <title>Student Info</title>
+    </head>
+    <body>
+        <div class="img">
+            <img class="center" src="img/logo1.png" />
+        </div>
+
+        <div class="wrapbtn">
+
+            <button class="progress-icon"id="one">1</button>
+            <button class="progress-icon">2</button>
+
+        </div>
+
+        <div class="wrapnfo">
+
+            <h1>Настройки на акаунта</h1><br>
+            <form id="image-upload">
+                <span id="main-error" class="Err"></span> <br>
+                <section class='horizontal'>
+                    <input type="text" name="firstName" placeholder="Име*">
+                    <input type="text" name="lastName" placeholder="Фамилия*">
+                    <input type="text" name="facultyNumber" placeholder="Факултетен номер*"><br>
+                </section>
+
+                <section class="vertical">
+                    <label for="degree">Степен:*</label>
+                    <select id='degree' name="degree">
+                        <option value="B">Бакалавър</option>
+                        <option value="M">Магистър</option>
+                    </select>
+                </section>
+
+                <section class="vertical">
+                    <label for="speciality">Специалност: *</label>
+                    <select id="speciality" name="speciality">
+                        <option value="mat">Математика</option>
+                        <option value="inf">Информатика</option>
+                        <option value="CS">Компютърни науки</option>
+                        <option value="IT">Информационни технологии</option>
+                        <option value="MatandInf">Математика и информатика</option>
+                        <option value="Stat">Статистика</option>
+                    </select>
+                </section>
+                <br>
+                <label for="course">Курс*:</label>
+                <select id="course" name="course">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <label for="groupe">Група*:</label>
+                <select id="groupe" name="groupe">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+
+                <br>
+
+                <button type="submit" id="user-info-submit" class="next" >НАПРЕД</button>  <!--put back name="login" -->
+
+            </form>
+        </div>
+    </body>
+</html>

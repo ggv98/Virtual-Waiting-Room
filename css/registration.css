@@ -1,0 +1,195 @@
+html, body {
+    overflow-x: hidden;  /*disables horizontal scrolling */
+    margin: 0; overflow-y: hidden;
+    padding: 0;
+
+}
+body {
+    background: url("img/bg2.jpg") top right no-repeat;
+    background-attachment: fixed;
+    height: 100%;
+    background-size: cover;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+    
+img {
+     height: 30%;
+     width: 25%;
+     margin: 0 auto;
+     margin-top: 5px;
+}
+
+h1 {
+  color: white;
+  font-weight: 700;
+  text-align: center;
+}
+
+.center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+/* .content {
+    border-radius: 11px;
+    border: 2px solid grey;
+    background-color: #F3FFED;
+    width: 70%; color: green;
+    height: 87%;
+    margin: 0 auto; 
+}*/
+    
+    
+.progress-icon {
+    width: 30px;
+    height: 30px; float: left;
+    content: counter(step);
+    counter-increment: step;
+    line-height: 20px;
+    border: 2px solid lightgreen;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    display: table;
+    margin-right: 40px;
+    border-radius: 50%;
+    background-color: white;
+    font-family: cursive;
+}
+
+.progress-icon:last-child {
+      margin-right: 0px;
+}
+
+.wrapbtn {
+    display: table;
+    margin: 0 auto;
+    position: relative;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
+
+.wrapnfo {
+    position: relative;
+    top: -2%;
+    background: #4daf7c;
+    border: 0 none;
+    border-radius: 5px;
+    text-align: center;
+
+    box-shadow: 1px 1px 3px 2px #7aa486;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    width: 60%;
+    height: 65%;
+    margin: 0 auto;
+    }
+    
+
+input[type=text], input[type=password] {
+    height: 35px;        /*design of input fields (name and password) */
+    font-size: 16px;
+    width: 20%;
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    background: #4daf7c;
+    border: 2px solid white;
+    border-radius: 3px;
+    padding: 0 8px;
+}
+
+input[type=file]{
+    margin: auto;
+}
+
+select {
+    height: 35px;        /*design of input fields (name and password) */
+    font-size: 16px;
+    width: 8%;
+    color: white;
+    margin-bottom: 10px;
+    margin: auto;
+
+    background: #4daf7c;
+    border: 2px solid white;
+    border-radius: 3px;
+    padding: 0 8px;
+}
+select[name="speciality"]{
+  width: 30%;
+}
+select[name="degree"]{
+  width: 30%;
+
+}
+    
+input[type=text]:hover, input[type=password]:hover {
+ border: 1px solid white;
+ box-shadow: 2px 1px  white;
+}
+    
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: white;
+    text-align: center;
+    font-size: 15px;
+}
+ 
+#one, #two{
+    background-color: lightgreen;
+    color: white;
+}
+.next {
+    background-color: white;
+    color: #4daf7c;
+    border: 0px; text-align: center;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    padding: 10px 10px;
+    margin: auto;
+    margin-top: 30px;
+    font-family: 'Lato', sans-serif;;
+    font-size: 14px;
+    font-weight: 800;
+    width: 30%;
+    cursor: pointer;
+}
+
+.next:hover {
+    background-color: rgb(184, 197, 183);
+    color: #3a835d;
+}
+    
+label{
+    color:  #E5E5E5;
+    position: relative;
+    font-weight: 300;
+    font-size: 1em;
+    padding: 5px 5px 5px 0px;
+    margin: 10px auto;
+    height: 9px;
+    z-index: 9;
+    cursor: pointer;
+}
+    
+.Err{
+    color: red;
+}
+    
+.vertical{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.horizontal{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#profilepic{
+    width: 8rem;
+}

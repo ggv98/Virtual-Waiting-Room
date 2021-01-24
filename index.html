@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Waiting Room Sign in</title>
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script defer src='script/index.js'></script>
+        <script defer src='script/register.js'></script>
+        <script defer src='script/login.js'></script>
+
+    </head>
+
+    <body class = "nature-green-background">
+        <main>
+            <div id='welcome-view' class="centered">
+                <figure >
+                    <img class="logo-image" src="img/Logo1.png" />
+                </figure>
+                <br>
+                <h1>Добре дошли във виртуалната чакалня на FMI!</h1>
+                <h2>Влезте в акаунта си или се регистрирайте</h2>
+
+                <section class="button-bar">
+                    <button type="button" id="signUp" name="register-button">Регистрация</button>
+                    <button type="button" id="logIn" name="login-button">Вход</button>
+
+                </section>
+                <br>
+            </div>
+
+            <div id="modal-login" class="invisible">
+                <p class="close" >Затвори X</p>      
+                <h1>Вход</h1><br>
+                <form>
+                    <input type="text" id="login-username" name="username" placeholder="Потребителско име">
+                    <span id="login-username-error" class="Err"></span>
+
+                    <input type="password" id="login-password" name="password" placeholder="Парола">
+                    <span id="login-password-error" class="Err"></span>
+                    <br>
+
+                    <span id="login-main-error" class="Err"></span>
+                    <input type="submit" id="login-submit" class="submit-button" value="Вход"> 
+                </form>
+      
+                <div class="login-help"><br>
+                    <a href="#">Забравена парола</a>
+                </div>
+            </div>
+
+            <div id="modal-registered" class="invisible">
+                <p class="close" >Затвори X</p>      
+                <h1>Регистрация</h1><br>
+                <form>
+                    <input type="text" id="register-username" name="user" placeholder="Потребителско име">
+                    <span id="register-username-error" class="Err"></span>   
+                                                                                  
+                    <input type="password" id="register-password"name="pass" placeholder="Парола">
+                    <input type="password" id="register-confirm-password" name="passconfirm" placeholder="Потвърди парола">
+                    <span id="register-password-error" class="Err"></span>
+
+                    <input type="text" id="register-email" name="email" placeholder="Email" >
+                    <span id="register-email-error" class="Err"></span>
+                    </br>
+                    <span id="register-main-error" class="Err"></span>
+
+                    <input type="submit" id="register-submit" class="submit-button" value="Регистрация">  
+                </form>
+      
+                <div class="login-help"><br>
+                    <a href="#">Забравена парола</a>
+                </div>
+            </div>
+
+        </main>
+    </body>
+</html>
