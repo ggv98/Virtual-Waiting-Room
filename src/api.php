@@ -22,8 +22,9 @@
     } 
     elseif(preg_match("/get-username$/", $requestURL)) {
         get_username();
-    }
-     else {
+    } elseif(preg_match("/record-meet$/", $requestURL)) {
+        record_meet();
+    } else {
         echo json_encode(["error" => "URL not found"]);
     }
 
@@ -204,6 +205,11 @@
         }
 
         echo json_encode($response);
+    }
+
+    function record_meet() {
+        echo $_POST["meet_type"]; // just to test
+        // TODO
     }
 
     // function logout() {

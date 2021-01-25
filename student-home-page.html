@@ -44,10 +44,10 @@
             </div>
 
             <div class="form-popup" id="myForm">
-                <form action="/action_page.php" class="form-container">
+                <form id="form-exam-record" action="src/api.php/record-meet" method="POST" class="form-container">
                     <h1>Записване за среща</h1>
     
-                    <select class='dropdown-meet-type'>
+                    <select name="meet_type" class='dropdown-meet-type'>
                         <option disabled selected value>Тип на среща</option>
                         <option>Изпит</option>
                         <option>Консултация за проект</option>
