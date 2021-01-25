@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2021 at 11:09 AM
+-- Generation Time: Jan 25, 2021 at 04:24 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -51,6 +51,25 @@ INSERT INTO `students_info` (`userID`, `firstName`, `lastName`, `degree`, `speci
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `teachers_info`
+--
+
+CREATE TABLE `teachers_info` (
+  `userID` int(11) NOT NULL,
+  `firstName` varchar(64) NOT NULL,
+  `lastName` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `teachers_info`
+--
+
+INSERT INTO `teachers_info` (`userID`, `firstName`, `lastName`) VALUES
+(24, 'Teacher', 'Teacher');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -83,7 +102,8 @@ INSERT INTO `users` (`userID`, `userName`, `password`, `email`, `userType`) VALU
 (15, 'srxdtcfyvgu', '$2y$10$nLu0Zjcaqfn6hUdnWGmc7exOs4VPMSDn0SrQVNMfb2QfrQqjqdoNO', 'ggb98@abv.bg', 'Student'),
 (16, 'nkbhb55', '$2y$10$eaQ/jj0oqR53KTg8Mg70DuWux6Vjx3IxOLo9s1TKRoElwR73zrzjC', 'ggb98@abv.bg', 'Student'),
 (17, 'sdfsdfsd', '$2y$10$clsQarEKoDBR264W9f7n7udl/aQMy8dSKOsz9O/ldmcx6jyw11xDO', 'ggb98@abv.bg', 'Student'),
-(18, 'georgi12', '$2y$10$ZqJikORbeIkE3ym2xB4YWu858kOKfeIIRjzQCF/4yINl7pt3yQ0z.', 'ggb98@abv.bg', 'Student');
+(18, 'georgi12', '$2y$10$ZqJikORbeIkE3ym2xB4YWu858kOKfeIIRjzQCF/4yINl7pt3yQ0z.', 'ggb98@abv.bg', 'Student'),
+(24, 'admin', '$2y$10$FI3TbXVH1A9j2ikC0HljkeUyeuCRZsWnRq0ynmzt1Qymqa7vVjvLi', 'admin@gmail.com', 'Teacher');
 
 --
 -- Indexes for dumped tables
@@ -109,7 +129,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

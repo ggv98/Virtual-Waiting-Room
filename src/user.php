@@ -76,6 +76,9 @@
             }
         }
         public function getUserProfileFilledStage(){
+            if ($this->userType == 'Teacher'){
+                return ["success" => true, 'data' => 2];
+            }
             $query = $this->db->selectUserInfoQuery(["userId" => $this->userId]);
             if ($query["success"]) {
                 $user_info = $query["data"]->fetch(PDO::FETCH_ASSOC);
