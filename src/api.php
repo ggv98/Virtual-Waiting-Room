@@ -1,4 +1,5 @@
 <?php
+    require_once "db.php";
     require_once "user.php";
     require_once "utility.php";
     require_once "student_info.php";
@@ -27,6 +28,13 @@
         sign_up_for_meet();
     } elseif(preg_match("/create-meet$/", $requestURL)) {
         create_meet();
+    } elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
+        $db = new Database();
+        $query = $db->selectWaitingRoomsGivenTeacherIdQuery(["teacherId" => $_SESSION["userId"]]);
+        $queryRes = $query["data"]->fetch(PDO::FETCH_ASSOC);
+
+        $response = ["success" => false, "data" => $queryRes];
+        echo json_encode($response);
     }
      else {
         echo json_encode(["error" => "URL not found"]);
@@ -53,7 +61,7 @@
                     $_SESSION["userType"] = $user->getUserType();
                 } else {
                     $errors[] = $isUserValid["error"];
-                } 
+                }
             }
         } else {
             $errors[] = "Invalid request 1";

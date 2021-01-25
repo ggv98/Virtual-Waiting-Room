@@ -59,6 +59,9 @@
             $sql = "SELECT * FROM waiting_room";
             $this->selectAllWaitingRooms = $this->connection->prepare($sql);
 
+            $sql = "SELECT * FROM waiting_room WHERE teacherID = :teacherId";
+            $this->selectWaitingRoomsGivenTeacherIdStatement = $this->connection->prepare($sql);
+
         }
 // USERS QUERY
         public function insertUserQuery($data) {
@@ -162,7 +165,18 @@
             // ["id" => "..."]
             $this->selectAllWaitingRooms->execute();
 
-            return ["success" => true, "data" => $this->selectUserByIdStatement];
+            return ["success" => true, "data" => $this->selectAllWaitingRooms];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
+    public function selectWaitingRoomsGivenTeacherIdQuery($data) {
+        try {
+            // ["id" => "..."]
+            $this->selectWaitingRoomsGivenTeacherIdStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectWaitingRoomsGivenTeacherIdStatement];
         } catch(PDOException $e) {
             return ["success" => false, "error" => $e->getMessage()];
         }

@@ -115,6 +115,16 @@
             endHourInput.min = inputedStartHour;
         }
 
+
+
+        var url = 'src/api.php/get-teacher-waiting-rooms';
+        var settings = {method: 'POST'};
+
+        var res = fetch(url, settings)
+                .then(response => response.json())
+                .then(response => console.log(response["data"]))
+                .catch(error => console.log(error));
+
     </script>
 
 </body>
