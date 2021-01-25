@@ -41,7 +41,11 @@ function logOn(data){
         if (data.data == 1){
             window.location = "registration_2.html";
         } else if (data.data == 2){
-            window.location = "student-home-page.html";
+            if (data.userType == "Teacher") {
+                window.location = "teacher-home-page-view.html";
+            } else {
+                window.location = "student-home-page.html";
+            }
         }
         else {
             window.location = "registration_1.html"

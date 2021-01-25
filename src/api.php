@@ -63,6 +63,7 @@
             $response = ["success" => false, "error" => $errors];
         } else {
             $stage = $user->getUserProfileFilledStage();
+            $stage["userType"] = $user->getUserType();
             $response = $stage;
         }
 
