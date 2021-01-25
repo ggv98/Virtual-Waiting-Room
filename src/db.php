@@ -27,6 +27,7 @@
         }
 
         private function prepareStatements() {
+            // Users Statements
             $sql = "INSERT INTO users(userName, password, email, userType) VALUES (:user, :password, :email, :type)";
             $this->insertUserStatement = $this->connection->prepare($sql);
 
@@ -35,20 +36,31 @@
 
             $sql = "SELECT * FROM users WHERE id=:id";
             $this->selectUserByIdStatement = $this->connection->prepare($sql);
-
+            
+            // students_info Statements
             $sql = "SELECT * FROM students_info WHERE userID =:userId";
             $this->selectUserProfileInfo = $this->connection->prepare($sql);
 
             $sql = "INSERT INTO students_info(userID, firstName, lastName, facultyNumber, degree, speciality, course,  groupe)
                     VALUES (:userId, :firstName, :lastName, :facultyNumber, :degree, :speciality, :course, :groupe)";
-            
             $this->insertUserInfoStatement = $this->connection->prepare($sql);
 
             $sql = "UPDATE students_info SET Image=:image WHERE userID=:userId";
-
             $this->updateUserImageStatement = $this->connection->prepare($sql);
-        }
 
+            // waiting_room Statements
+            $sql = "INSERT INTO waiting_room(teacherID,	title, subject,	avgDuration, message, startTime, endTime, meetType,	address)
+                    VALUES (:teacherID,	:title, :subject, :avgDuration, :message, :startTime, :endTime, :meetType,	:address)";
+            $this->insertWaitingRoomStatement = $this->connection->prepare($sql);
+
+            $sql = "UPDATE waiting_room SET message=:message WHERE id=:id";
+            $this->updateWaitingRoomMsgStatement = $this->connection->prepare($sql);
+            
+            $sql = "SELECT * FROM waiting_room";
+            $this->selectAllWaitingRooms = $this->connection->prepare($sql);
+
+        }
+// USERS QUERY
         public function insertUserQuery($data) {
             try {
                 // ["user" => "...", "password => "...", :email => ",,,"]
@@ -60,6 +72,31 @@
                 return ["success" => false, "error" => $e->getMessage()];
             }
         }
+        
+        public function selectUserByIdQuery($data) {
+            try {
+                // ["id" => "..."]
+                $this->selectUserByIdStatement->execute($data);
+
+                return ["success" => true, "data" => $this->selectUserByIdStatement];
+            } catch(PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
+        
+        public function selectUserQuery($data) {
+            try {
+                // ["user" => "..."]
+                $this->selectUserStatement->execute($data);
+
+                return ["success" => true, "data" => $this->selectUserStatement];
+            } catch(PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
+
+// User INFO QUERY
+
         public function insertUserInfoQuery($data) {
             try {
                 // ["userid" => "...", "firstName => "...", :lastName => ",,,"..............]
@@ -81,17 +118,6 @@
                 return ["success" => false, "error" => $e->getMessage()];
             }
         }
-
-        public function selectUserQuery($data) {
-            try {
-                // ["user" => "..."]
-                $this->selectUserStatement->execute($data);
-
-                return ["success" => true, "data" => $this->selectUserStatement];
-            } catch(PDOException $e) {
-                return ["success" => false, "error" => $e->getMessage()];
-            }
-        }
         
         public function selectUserInfoQuery($data) {
             try {
@@ -105,15 +131,42 @@
         }
 
 
-        public function selectUserByIdQuery($data) {
-            try {
-                // ["id" => "..."]
-                $this->selectUserByIdStatement->execute($data);
+// WAITING ROOMS QUERY
 
-                return ["success" => true, "data" => $this->selectUserByIdStatement];
-            } catch(PDOException $e) {
-                return ["success" => false, "error" => $e->getMessage()];
-            }
+    public function createWaitingRoomQuery($data) {
+        try {
+            // ["teacherID" => "...", "title => "...", :subject => ",,,"..........]
+    
+            $this->insertWaitingRoomStatement->execute($data);
+
+            return ["success" => true];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
+    public function updateWaitingRoomMsgQuery($data) {
+        try {
+            // ["id" => "...", "message => "..."]
+    
+            $this->updateWaitingRoomMsgStatement->execute($data);
+
+            return ["success" => true];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+    
+    public function selectAllWaitingRoomsQuery() {
+        try {
+            // ["id" => "..."]
+            $this->selectAllWaitingRooms->execute();
+
+            return ["success" => true, "data" => $this->selectUserByIdStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+}
+
 ?>
