@@ -8,6 +8,6 @@ var res = fetch(url, settings)
 
 
 function update_view_username(username) {
-    elemToUpdate = document.getElementById("student-name");
+    elemToUpdate = document.getElementById("user-name");
     elemToUpdate.innerHTML = username
 }

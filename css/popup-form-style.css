@@ -1,20 +1,3 @@
-/* TODO no idea why if following selector with css, is exported it not works */
-.header {
-    margin-left: 10%;
-}
-
-.user-info-text {
-    font-family: Arial, Verdana, Helvetica, sans-serif;
-    font-size: medium;
-    font-weight: bold;
-    font-style: normal;
-    color: #000000;
-    /* text-decoration: none; */
-    line-height: normal;
-
-    font-size: 1.25rem;
-}
-
 /* TODO export it to user-specific-style.css */
 
 /* pop up form */
@@ -25,6 +8,7 @@
 
 /* The popup form - hidden by default */
 .form-popup {
+    /* height: 50vh; */
     display: none;
     position: fixed;
     bottom: 0;
@@ -48,7 +32,7 @@
 }
 
 /* Full-width input fields */
-.form-container select {
+.form-container .dropdown-meet-type {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;

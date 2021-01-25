@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="css/user-style.css">
+    <link rel="stylesheet" href="css/popup-form-style.css">
+
+    <style>
+
+        /* TODO think about exporting to external .css file */
+
+        .header {
+            margin-left: 10%;
+        }
+
+        input, select {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+        }
+
+        /* .input-hour {
+            display: inline;
+            width: 45%;
+        } */
+
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header">
+        <img src="img/sofia-uni-logo.jpg">
+
+        <pre class="welcome-message"> 
+            Добре дошъл, 
+            <span id="user-name" class="name">Професор Професоров</span> </pre>
+    </header>
+
+    <section class="main-content">
+        <h3> Активни стаи: </h3>
+        <div class="rooms-container">
+            <div class="room">1</div>
+            <div class="room">2</div>
+            <div class="room">3</div>  
+            <div class="room">4</div>
+            <div class="room">5</div>
+            <div class="room">6</div>  
+            <div class="room">7</div>
+            <div class="room">8</div>
+            <div class="room">9</div>  
+            <div id="add-room-button" class="room">+</div>  
+        </div>
+    </section>
+
+    <div class="form-popup" id="myForm">
+        <form id="create-exam-form" action="src/api.php/create-meet" method="POST" class="form-container">
+            <h1>Създаване на стая</h1>
+
+            <input type="text" placeholder="Въведи заглавие на срещата" name="meet_title" required>
+
+            <input type="text" placeholder="Въведи име на предмет" name="subject" required>
+
+            <input type="number" placeholder="Въведи средна продължителност на среща" name="avg-time" required>
+
+            <input class="input-hour" type="number" step=0.01 min=6 max=20 placeholder="Начало" name="start-hour" required>
+
+            <input class="input-hour" type="number" step=0.01 min=6 max=20 placeholder="Край" name="end-hour" required>
+
+            <select name="meet_address_type">
+                <option disabled selected value>Тип на среща</option>
+                <option>Онлайн</option>
+                <option>На място</option>
+            </select>
+
+            <input type="text" placeholder="Адрес" name="address" required>
+
+            <button type="submit" class="btn">Създаване</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
+
+        </form>
+    </div>
+
+    <!-- <script src="update_username.js"></script> -->
+
+    <script>
+
+        function openForm(room) {
+            document.getElementById("myForm").style.display = "block";
+
+            // TODO set the submit button of the form to update the next exam (in the up right corner)
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+
+        document.getElementById("add-room-button").addEventListener("click", openForm);
+    </script>
+
+</body>
+</html>
