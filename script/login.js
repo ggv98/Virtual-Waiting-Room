@@ -41,7 +41,7 @@ function logOn(data){
         if (data.data == 1){
             window.location = "registration_2.html";
         } else if (data.data == 2){
-            window.location = "dashboard.html";
+            window.location = "student-home-page.html";
         }
         else {
             window.location = "registration_1.html"

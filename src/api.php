@@ -19,7 +19,11 @@
         session();
     } elseif(preg_match("/image-upload$/", $requestURL)) {
         upload_image();
-    } else {
+    } 
+    elseif(preg_match("/get-username$/", $requestURL)) {
+        get_username();
+    }
+     else {
         echo json_encode(["error" => "URL not found"]);
     }
 
@@ -47,7 +51,7 @@
                 } 
             }
         } else {
-            $errors[] = "Invalid request";
+            $errors[] = "Invalid request 1";
         }
 
         if($errors) {
@@ -88,7 +92,7 @@
                 }
             }
         } else {
-            $errors[] = "Invalid request";
+            $errors[] = "Invalid request 2";
         }
 
         if($errors) {
@@ -124,7 +128,7 @@
                     $result = $user_info->saveUserInfo($_SESSION["userId"]);
             }
         } else {
-            $errors[] = "Invalid request";
+            $errors[] = "Invalid request 3";
         }
 
         if($errors) {
@@ -184,6 +188,24 @@
         echo json_encode($response);
 
     }
+
+    function get_username() {
+        $username;
+
+        if ($_SESSION) {
+            if ($_SESSION["username"]) {
+                $username = $_SESSION["username"];
+            } else {
+                $username = "No user";
+            }
+            $response = ["success" => $username, "data" => $username];
+        } else {
+            $response = ["success" => false, "data" => "Helo world error"];
+        }
+
+        echo json_encode($response);
+    }
+
     // function logout() {
     //     if ($_SESSION) {
     //         session_unset();
