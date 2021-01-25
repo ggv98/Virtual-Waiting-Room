@@ -1,0 +1,93 @@
+/* TODO no idea why if following selector with css, is exported it not works */
+.header {
+    margin-left: 10%;
+}
+
+.user-info-text {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: medium;
+    font-weight: bold;
+    font-style: normal;
+    color: #000000;
+    /* text-decoration: none; */
+    line-height: normal;
+
+    font-size: 1.25rem;
+}
+
+p {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: medium;
+    font-weight: normal;
+    font-style: normal;
+    color: #000000;
+    /* text-decoration: none; */
+    line-height: normal;
+
+    font-size: 1.25rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.welcome-message {
+    font-weight: normal;
+    font-size: 1.25rem;
+}
+
+.main-content {
+    margin: 1rem 10rem ;
+
+    min-width: 250px;
+}
+
+/* teacher name and user name style */
+.name {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: medium;
+    font-weight: bold;
+    font-style: normal;
+    color: #000000;
+    /* text-decoration: none; */
+    line-height: normal;
+}
+
+.header img {
+    width: 400px;
+    height: 100px;
+}
+
+.rooms-container {
+    display: grid;
+    /* grid-template-columns: minmax(200px, 300px) auto auto auto; */
+    /* grid-template-columns: repeat( auto-fit, minmax(500px, 1fr) ); */
+    grid-template-columns: repeat( auto-fit, minmax(200px, 1fr) );
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.room {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+
+    margin: 5px;
+    height: 70px;
+    /* width: 50px; */
+}
+
+.add-room-button {
+    background-color: rgba(255, 255, 255, 250);
+    /* padding: 5px; */
+    text-align: center;
+    font-size: 5vw;
+}
+
+.add-room-button:hover {
+    background-color: rgba(230, 230, 230, 230);
+    font-size: 5.2vw;   /* TODO how to increase relative to the current font size, em ? */
+}

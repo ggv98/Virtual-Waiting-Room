@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<!-- TODO rename document -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>User home page</title>
+
+        <link rel="stylesheet" href="css/user-style.css">
+        <link rel="stylesheet" href="css/popup-form-style.css">
+        
+        <!-- <script defer src='script/register.js'></script> -->
+
+    </head>
+
+    <body>
+
+        <header class="header">
+            <p class="welcome-message"> 
+                Добре дошъл, <br>
+                <span id="user-name" class="name" class="user-info-text">user looser</span> </p>
+    
+                <img src="img/sofia-uni-logo.jpg">
+    
+                <div>
+                    <p> Очакван час на изпит: <span id="time-to-exam" class="user-info-text"> X </span> </p>
+                    <p> Следващ изпит: <span id="next-exam" class="user-info-text">1</span> </p>
+                </div>
+        </header>
+    
+        <section class="main-content">
+            <h3> Активни стаи: </h3>
+            <div class="rooms-container">
+                <div class="room">1</div>
+                <div class="room">2</div>
+                <div class="room">3</div>  
+                <div class="room">4</div>
+                <div class="room">5</div>
+                <div class="room">6</div>  
+                <div class="room">7</div>
+                <div class="room">8</div>
+                <div class="room">9</div>
+            </div>
+
+            <div class="form-popup" id="myForm">
+                <form id="form-exam-record" action="src/api.php/sign-up-for-meet" method="POST" class="form-container">
+                    <h1>Записване за среща</h1>
+    
+                    <select name="meet_type" class='dropdown-meet-type'>
+                        <option disabled selected value>Тип на среща</option>
+                        <option>Изпит</option>
+                        <option>Консултация за проект</option>
+                        <option>Нанасяне на оценка</option>
+                    </select>
+    
+                    <button type="submit" class="btn">Запис</button>
+                    <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
+    
+                </form>
+            </div>
+    
+        </section>
+
+
+        <!-- TODO why not working one of the following scripts -->
+        <script src='script/check_session.js'></script>
+
+        <script src='script/update_username.js'></script>
+
+        <script src='script/student_forms_activity.js'></script>
+        
+
+    </body>
+</html>

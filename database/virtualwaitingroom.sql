@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2021 at 04:24 PM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Generation Time: Jan 25, 2021 at 08:17 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `virtualwaitingroom`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `meet_record`
+--
+
+CREATE TABLE `meet_record` (
+  `roomID` int(11) NOT NULL,
+  `studentID` int(11) NOT NULL,
+  `meetTime` datetime NOT NULL,
+  `reason` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -65,7 +78,8 @@ CREATE TABLE `teachers_info` (
 --
 
 INSERT INTO `teachers_info` (`userID`, `firstName`, `lastName`) VALUES
-(24, 'Teacher', 'Teacher');
+(24, 'Teacher', 'Teacher'),
+(25, 'Teacher', 'Teacher');
 
 -- --------------------------------------------------------
 
@@ -103,7 +117,27 @@ INSERT INTO `users` (`userID`, `userName`, `password`, `email`, `userType`) VALU
 (16, 'nkbhb55', '$2y$10$eaQ/jj0oqR53KTg8Mg70DuWux6Vjx3IxOLo9s1TKRoElwR73zrzjC', 'ggb98@abv.bg', 'Student'),
 (17, 'sdfsdfsd', '$2y$10$clsQarEKoDBR264W9f7n7udl/aQMy8dSKOsz9O/ldmcx6jyw11xDO', 'ggb98@abv.bg', 'Student'),
 (18, 'georgi12', '$2y$10$ZqJikORbeIkE3ym2xB4YWu858kOKfeIIRjzQCF/4yINl7pt3yQ0z.', 'ggb98@abv.bg', 'Student'),
-(24, 'admin', '$2y$10$FI3TbXVH1A9j2ikC0HljkeUyeuCRZsWnRq0ynmzt1Qymqa7vVjvLi', 'admin@gmail.com', 'Teacher');
+(24, 'admin', '$2y$10$FI3TbXVH1A9j2ikC0HljkeUyeuCRZsWnRq0ynmzt1Qymqa7vVjvLi', 'admin@gmail.com', 'Teacher'),
+(25, 'admin2', '$2y$10$GltxCAAZeTPvipfKAtrVhuO8xzn7dPMxZ78zfn9KKLMGQL.rdUUda', 'admin@gmail.com', 'Teacher');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `waiting_room`
+--
+
+CREATE TABLE `waiting_room` (
+  `teacherID` int(11) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `subject` varchar(64) NOT NULL,
+  `avgDuration` int(11) NOT NULL,
+  `message` varchar(512) DEFAULT NULL,
+  `startTime` datetime NOT NULL,
+  `endTime` datetime NOT NULL,
+  `meetType` tinyint(1) NOT NULL,
+  `address` varchar(256) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -122,6 +156,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`userID`);
 
 --
+-- Indexes for table `waiting_room`
+--
+ALTER TABLE `waiting_room`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -129,7 +169,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `waiting_room`
+--
+ALTER TABLE `waiting_room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -27,7 +27,7 @@ const ajax = (url, settings ) => {
 
 function next(data){
     if (data.success){
-        window.location = "dashboard.html"
+        window.location = "student-home-page.html"
     }
     else{
         console.log(data.error)
