@@ -16,7 +16,7 @@ class waiting_room {
 
     private $db;
 
-    public function __construct($id, $teacherID='', $title='', $subject='', $avgDuration='', $message='', $startTime='', $endTime='', $meetType='', $address='') {
+    public function __construct($teacherID='', $title='', $subject='', $avgDuration='', $message='', $startTime='', $endTime='', $meetType='', $address='', $id='') {
         $this->id = $id;
         $this->teacherID = $teacherID;
         $this->title = $title;
@@ -70,7 +70,7 @@ class waiting_room {
         return $this->meetType;
     }
 
-    public function createWaitingRoom($userId) {
+    public function createWaitingRoom() {
         $query = $this->db->createWaitingRoomQuery(["teacherID" => $this->teacherID,
                                                     "title" => $this->title,
                                                     "subject" => $this->subject,

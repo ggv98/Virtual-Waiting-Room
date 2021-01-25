@@ -2,6 +2,7 @@
     require_once "user.php";
     require_once "utility.php";
     require_once "student_info.php";
+    require_once "waiting_room.php";
 
     session_start();
 
@@ -217,22 +218,24 @@
     }
 
     function create_meet() {
-        echo $teacher_id = $_SESSION["userId"];
-        echo "\n";
-        echo $meet_title = $_POST["meet_title"];
-        echo "\n";
-        echo $subject = $_POST["subject"];
-        echo "\n";
-        echo $avg_duration = $_POST["avg-duration"];
-        echo "\n";
-        echo $start_hour = $_POST["start-hour"];
-        echo "\n";
-        echo $end_hour = $_POST["end-hour"];
-        echo "\n";
-        echo $meet_address_type = $_POST["meet_address_type"];
-        echo "\n";
-        echo $meet_address = $_POST["address"];
-        
+        $teacher_id = $_SESSION["userId"];
+        $meet_title = $_POST["meet_title"];
+        $subject = $_POST["subject"];
+        $avg_duration = $_POST["avg-duration"];
+        $meet_data = $_POST["date"];
+        $start_hour = $_POST["start-hour"];
+        $end_hour = $_POST["end-hour"];
+        $meet_address_type = $_POST["meet_address_type"];
+        $meet_address = $_POST["address"];
+
+        $start_hour_datetime = $meet_data." ".$start_hour;
+        $end_hour_datetime = $meet_data." ".$end_hour;
+
+        $room = new waiting_room($teacher_id, $meet_title, $subject, $avg_duration,
+                                 $message='', $start_hour_datetime, $end_hour_datetime,
+                                 $meet_address_type, $meet_address);
+        $room->createWaitingRoom();
+
     }
 
     // function logout() {
