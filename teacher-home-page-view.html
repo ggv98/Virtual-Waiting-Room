@@ -64,13 +64,15 @@
 
             <input type="text" placeholder="Въведи име на предмет" name="subject" required>
 
-            <input type="number" placeholder="Въведи средна продължителност на среща" name="avg-time" required>
+            <input type="number" placeholder="Въведи средна продължителност на среща" name="avg-duration" required>
 
-            <input class="input-hour" type="number" step=0.01 min=6 max=20 placeholder="Начало" name="start-hour" required>
+            <label for="start-hour"> Начало на среща </label>
+            <input id="start-hour" name="start-hour" type="time" onchange="updateEndHourOptions()" step="600" required>
 
-            <input class="input-hour" type="number" step=0.01 min=6 max=20 placeholder="Край" name="end-hour" required>
+            <label for="end-hour"> Край на среща </label>
+            <input id="end-hour" name="end-hour" type="time" placeholder="Край" step="600" required>
 
-            <select name="meet_address_type">
+            <select name="meet_address_type" required>
                 <option disabled selected value>Тип на среща</option>
                 <option>Онлайн</option>
                 <option>На място</option>
@@ -99,6 +101,17 @@
         }
 
         document.getElementById("add-room-button").addEventListener("click", openForm);
+
+
+        function updateEndHourOptions() {
+            inputedStartHour = document.getElementById("start-hour").value;
+            console.log(inputedStartHour);
+
+            endHourInput = document.getElementById("end-hour");
+
+            endHourInput.min = inputedStartHour;
+        }
+
     </script>
 
 </body>

@@ -211,13 +211,28 @@
     }
 
     function sign_up_for_meet() {
-        echo $_POST["meet_type"]; // just to test
+        // echo $_POST;
+        echo "Hello world";
         // TODO
     }
 
     function create_meet() {
-        echo $_POST["meet_address_type"]; // just to test
-        // TODO
+        echo $teacher_id = $_SESSION["userId"];
+        echo "\n";
+        echo $meet_title = $_POST["meet_title"];
+        echo "\n";
+        echo $subject = $_POST["subject"];
+        echo "\n";
+        echo $avg_duration = $_POST["avg-duration"];
+        echo "\n";
+        echo $start_hour = $_POST["start-hour"];
+        echo "\n";
+        echo $end_hour = $_POST["end-hour"];
+        echo "\n";
+        echo $meet_address_type = $_POST["meet_address_type"];
+        echo "\n";
+        echo $meet_address = $_POST["address"];
+        
     }
 
     // function logout() {
