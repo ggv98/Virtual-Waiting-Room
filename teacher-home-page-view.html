@@ -21,6 +21,10 @@
             margin: 10px auto;
         }
 
+        .room-info {
+            text-align: center;
+        }
+
         /* .input-hour {
             display: inline;
             width: 45%;
@@ -42,17 +46,12 @@
 
     <section class="main-content">
         <h3> Активни стаи: </h3>
-        <div class="rooms-container">
-            <div class="room">1</div>
-            <div class="room">2</div>
-            <div class="room">3</div>  
-            <div class="room">4</div>
-            <div class="room">5</div>
-            <div class="room">6</div>  
-            <div class="room">7</div>
-            <div class="room">8</div>
-            <div class="room">9</div>  
-            <div id="add-room-button" class="room">+</div>  
+        <div id="rooms-container" class="rooms-container">
+            <!-- <div class="room">
+                <p class="meet-title"> Math </p>
+                <p class="meet-start-end-hour"> 1-5 </p>
+            </div> -->
+            <!-- <div id="add-room-button" class="room"> <p>+</p> </div>   -->
         </div>
     </section>
 
@@ -60,7 +59,7 @@
         <form id="create-exam-form" action="src/api.php/create-meet" method="POST" class="form-container">
             <h1>Създаване на стая</h1>
 
-            <input type="text" placeholder="Въведи заглавие на срещата" name="meet_title" required>
+            <input id="meet-title" type="text" placeholder="Въведи заглавие на срещата" name="meet_title" required>
 
             <input type="text" placeholder="Въведи име на предмет" name="subject" required>
 
@@ -83,7 +82,7 @@
 
             <input type="text" placeholder="Адрес" name="address" required>
 
-            <button type="submit" class="btn">Създаване</button>
+            <button onsubmit="addRoomToView()" type="submit" class="btn">Създаване</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
 
         </form>
@@ -103,7 +102,6 @@
             document.getElementById("myForm").style.display = "none";
         }
 
-        document.getElementById("add-room-button").addEventListener("click", openForm);
 
 
         function updateEndHourOptions() {
@@ -117,13 +115,82 @@
 
 
 
+        // TODO isolate in function
         var url = 'src/api.php/get-teacher-waiting-rooms';
         var settings = {method: 'POST'};
 
         var res = fetch(url, settings)
                 .then(response => response.json())
-                .then(response => console.log(response["data"]))
+                .then(response => displayResponseToView(response["data"]))
                 .catch(error => console.log(error));
+
+        function displayResponseToView(rooms) {
+            for (room of rooms) {
+                displayRoom(room);
+            }
+
+            displayAddRoomButton();
+
+            document.getElementById("add-room-button").addEventListener("click", openForm);
+        }
+
+        function getRoomTimeInterval(room) {
+            var date = new Date(room["startTime"]);
+            var startHour = date.getHours() + ":" + date.getMinutes();
+
+            date = new Date(room["endTime"]);
+            var endHour = date.getHours() + ":" + date.getMinutes();
+            
+            var timeInterval = startHour + " - " + endHour;
+            
+            return timeInterval;
+        }
+       
+        function displayAddRoomButton() {
+            var node = document.createElement("p");
+            node.classList.add("room-info");
+            node.innerText = "+";
+
+            var room = document.createElement("div");
+            room.id = "add-room-button";
+            room.classList.add("room");
+            room.appendChild(node);
+            document.getElementById("rooms-container").appendChild(room);
+        }
+
+        function displayRoom(room) {
+            var roomTitle = room["title"];
+            var timeInterval = getRoomTimeInterval(room);
+            
+            var node1 = document.createElement("p");                 // Create a <li> node
+            node1.classList.add("room-info");
+            node1.innerText = roomTitle;
+
+            var node2 = document.createElement("p");
+            node2.classList.add("room-info");
+            node2.innerText = timeInterval;
+
+            var room = document.createElement("div");
+            room.classList.add("room");
+            room.appendChild(node1);
+            room.appendChild(node2);
+
+            document.getElementById("rooms-container").appendChild(room);
+        }
+
+        // adding room based on the form information
+        // used on Submit-ing the form
+        function addRoomToView() {
+            var rooms_container = document.getElementById("rooms-container");
+            rooms_container.removeChild(rooms_container.lastChild);
+
+            var meet_title = document.getElementById("meet-title").innerHTML;
+            var date = document.getElementById("date").innerHTML;
+            var start_hour = document.getElementById("start-hour").innerHTML;
+            var end_hour = document.getElementById("end-hour").innerHTML;
+
+            // TODO add room
+        }
 
     </script>
 
