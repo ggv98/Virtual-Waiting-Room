@@ -1,3 +1,7 @@
+        
+        updateView();
+        document.getElementById("submitBtn").addEventListener("click", createMeet);
+
 
         function openForm(room) {
             document.getElementById("create-exam-form").style.display = "inline-block";
@@ -9,8 +13,6 @@
             document.getElementById("create-exam-form").style.display = "none";
         }
 
-
-
         function updateEndHourOptions() {
             inputedStartHour = document.getElementById("start-hour").value;
             console.log(inputedStartHour);
@@ -20,16 +22,20 @@
             endHourInput.min = inputedStartHour;
         }
 
+        // update waiting rooms
+        function updateView() {
+            var url = 'src/api.php/get-teacher-waiting-rooms';
+            var settings = {method: 'POST'};
 
+            document.getElementById("rooms-container").innerHTML = "";  // remove all children
 
-        // TODO isolate in function
-        var url = 'src/api.php/get-teacher-waiting-rooms';
-        var settings = {method: 'POST'};
+            var res = fetch(url, settings)
+                    .then(response => response.json())
+                    .then(response => displayResponseToView(response["data"]))
+                    .catch(error => console.log(error));
 
-        var res = fetch(url, settings)
-                .then(response => response.json())
-                .then(response => displayResponseToView(response["data"]))
-                .catch(error => console.log(error));
+            return false; // because used in form that we do not want to refresh the page ... But for now not working
+        }
 
         // TODO maybe isolate some functions that are common with student-home-page
         function displayResponseToView(rooms) {
@@ -60,18 +66,19 @@
             node.classList.add("room-info");
             node.innerText = "+";
 
-            var room = document.createElement("div");
-            room.id = "add-room-button";
-            room.classList.add("room");
-            room.appendChild(node);
-            document.getElementById("rooms-container").appendChild(room);
+            var roomButton = document.createElement("div");
+            roomButton.id = "add-room-button";
+            roomButton.classList.add("room");
+            roomButton.appendChild(node);
+            document.getElementById("rooms-container").appendChild(roomButton);
+            roomButton.addEventListener("click", openForm);
         }
 
         function displayRoom(room) {
             var roomTitle = room["title"];
             var timeInterval = getRoomTimeInterval(room);
             
-            var node1 = document.createElement("p");                 // Create a <li> node
+            var node1 = document.createElement("p");
             node1.classList.add("room-info");
             node1.innerText = roomTitle;
 
@@ -89,14 +96,45 @@
 
         // adding room based on the form information
         // used on Submit-ing the form
-        function addRoomToView() {
+        function createMeet() {
             var rooms_container = document.getElementById("rooms-container");
-            rooms_container.removeChild(rooms_container.lastChild);
+            rooms_container.innerHTML = "";
 
-            var meet_title = document.getElementById("meet-title").innerHTML;
-            var date = document.getElementById("date").innerHTML;
-            var start_hour = document.getElementById("start-hour").innerHTML;
-            var end_hour = document.getElementById("end-hour").innerHTML;
+            var meet_title = document.getElementById("meet-title").value;
+            var subject = document.getElementById("subject").value;
+            var avg_duration = document.getElementById("avg-duration").value;
+            var meet_data = document.getElementById("date").value;
+            var start_hour = document.getElementById("start-hour").value;
+            var end_hour = document.getElementById("end-hour").value;
+            var meet_address_type = document.getElementById("meet_address_type").value;
+            var meet_address = document.getElementById("address").value;;
 
-            // TODO add room
+            const meet = {
+                meet_title,
+                subject,
+                avg_duration,
+                meet_data,
+                start_hour,
+                end_hour,
+                meet_address_type,
+                meet_address
+            };
+
+            console.log(meet);
+            
+            const settings = {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                body: `data=${JSON.stringify(meet)}`
+            };
+
+            var url = 'src/api.php/create-meet';
+
+            fetch(url, settings);
+
+            updateView();
+
+            return false;
         }
