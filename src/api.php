@@ -29,8 +29,26 @@
     } elseif(preg_match("/create-meet$/", $requestURL)) {
         create_meet();
     } elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
+        // TODO isolate in function
         $db = new Database();
         $query = $db->selectWaitingRoomsGivenTeacherIdQuery(["teacherId" => $_SESSION["userId"]]);
+        
+        $queryRes = [];
+        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+            array_push($queryRes, $row);
+        }
+
+        if (empty($queryRes)) {
+            $response = ["success" => false];
+        } else {
+            $response = ["success" => true, "data" => $queryRes];
+        }
+
+        echo json_encode($response);
+    } elseif(preg_match("/get-all-waiting-rooms$/", $requestURL)) {
+        // TODO isolate in function
+        $db = new Database();
+        $query = $db->selectAllWaitingRoomsQuery();
         
         $queryRes = [];
         while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {

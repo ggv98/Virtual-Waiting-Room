@@ -124,6 +124,7 @@
                 .then(response => displayResponseToView(response["data"]))
                 .catch(error => console.log(error));
 
+        // TODO maybe isolate some functions that are common with student-home-page
         function displayResponseToView(rooms) {
             for (room of rooms) {
                 displayRoom(room);
@@ -193,6 +194,8 @@
         }
 
     </script>
+
+    <script src="script/update_username.js"></script>
 
 </body>
 </html>
