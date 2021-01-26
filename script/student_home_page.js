@@ -38,11 +38,11 @@
      node2.classList.add("room-info");
      node2.innerText = timeInterval;
 
-     var room = document.createElement("div");
-     room.classList.add("room");
-     room.appendChild(node1);
-     room.appendChild(node2);
-     room.onclick = function() { openForm() };
+     var roomElem = document.createElement("div");
+     roomElem.classList.add("room");
+     roomElem.appendChild(node1);
+     roomElem.appendChild(node2);
+     roomElem.onclick = function() { openForm(room['id']) };
 
-     document.getElementById("rooms-container").appendChild(room);
+     document.getElementById("rooms-container").appendChild(roomElem);
  }

@@ -1,7 +1,47 @@
-function openForm(room) {
-    document.getElementById("form-exam-record").style.display = "inline-block";
+const submitBtn = document.getElementById('submit-record');
+submitBtn.addEventListener('click', create_record);
 
-    // TODO set the submit button of the form to update the next exam (in the up right corner)
+function create_record(event){
+
+    event.preventDefault();
+
+    const roomId = document.getElementById("room-id").value;
+    const meetType = document.getElementById('meet-type').value;
+
+    const meet_record = {
+        roomId,
+        meetType
+    };
+
+    const settings = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `data=${JSON.stringify(meet_record)}`
+    };
+    var url = 'src/api.php/sign-up-for-meet'
+    var res = fetch(url, settings)
+         .then(response => response.json())
+         .then(response => recordForMeet(response))
+         .catch(error => console.log(error));
+
+
+}
+
+function recordForMeet(data){
+    closeForm();
+    if(data.success){
+        alert(`Успешно се записахте в опашката за ${data.data.roomTitle} вашият ред е в ${data.data.meetTime} часа`);
+    } else{
+        alert(`Грешка ${data.error} Моля опитайте отново`);
+    }
+}
+
+function openForm(room) {
+    console.log(room);
+    document.getElementById("form-exam-record").style.display = "inline-block";
+    document.getElementById("room-id").value = room;
 }
 
 function closeForm() {
