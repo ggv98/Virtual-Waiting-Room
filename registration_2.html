@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+
 
         <link rel="stylesheet" href="css/registration.css">
         <script src='script/check_session.js'></script>
@@ -31,8 +33,8 @@
 
                 <form class="vertical" id='image-upload'>
                     <label for="name" id="choose">Избери снимка</label>
-                    <input type="file" name="image" title=""> <br> <br>
-                    <input type="submit" id="user-image-submit" class="next" name="upload" value="Качи снимка">
+                    <input type="file" name="image" title="" onchange="readImage(this);"> <br> <br>
+                    <input type="submit" id="user-image-submit" class="next" name="upload" value="Качи снимка" >
                 </form>
 
 

@@ -35,3 +35,19 @@ function next(data){
         mainError.innerHTML = data.error;
     }
 }
+
+function readImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            const image = document.getElementById('profilepic');
+
+                image.src = reader.result
+                image.style.width = "200px"
+                image.style.height = "130px"
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
