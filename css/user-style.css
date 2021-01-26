@@ -63,21 +63,51 @@ p {
     display: grid;
     /* grid-template-columns: minmax(200px, 300px) auto auto auto; */
     /* grid-template-columns: repeat( auto-fit, minmax(500px, 1fr) ); */
-    grid-template-columns: repeat( auto-fit, minmax(200px, 1fr) );
-    background-color: #2196F3;
+    grid-template-columns: repeat( auto-fit, minmax(300px, 2fr) );
+    background-color: #4daf7c;
     padding: 10px;
+    width: 90%;
+    min-height: 350px;
 }
 
 .room {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 10px;
+    padding: 7px;
     font-size: 30px;
     /* text-align: center; */
 
     margin: 5px;
-    height: 70px;
+    height: 120px;
+    min-width: 280px;
     /* width: 50px; */
+}
+
+#logout{
+    text-align: left;
+    border-radius: 5px;
+    background-color:  #3c835e;
+    color: white;
+    font-size: 16px;
+    padding: 3px;
+}
+#logout:hover{
+    background-color:#4daf7c;
+    cursor: pointer;
+}
+
+#room-title{
+    margin: 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+#room-subject, #room-place, #room-time, #room-date{
+    margin: 0;
+
+    text-align: left;
+    font-size: 17px;
+    font-weight: 500;
 }
 
 .add-room-button {

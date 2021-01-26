@@ -13,6 +13,8 @@
 
     if(preg_match("/login$/", $requestURL)) {
         login();
+    } elseif(preg_match("/logout$/", $requestURL)) {
+        logout();
     } 
     elseif(preg_match("/register$/", $requestURL)) {
         register();
@@ -343,16 +345,14 @@
         echo json_encode($response);
     }
 
-    // function logout() {
-    //     if ($_SESSION) {
-    //         session_unset();
-    //         session_destroy();
-
-    //         setcookie("token", "", time() - 60, "/");
+    function logout() {
+        if ($_SESSION) {
+            session_unset();
+            session_destroy();
             
-    //         echo json_encode(["success" => true]);
-    //     } else {
-    //         echo json_encode(["success" => false]);
-    //     }
-    // }
+            echo json_encode(["success" => true]);
+        } else {
+            echo json_encode(["success" => false]);
+        }
+    }
 ?>
