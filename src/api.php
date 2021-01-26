@@ -271,14 +271,22 @@
 
     function create_meet() {
         $teacher_id = $_SESSION["userId"];
-        $meet_title = $_POST["meet_title"];
-        $subject = $_POST["subject"];
-        $avg_duration = $_POST["avg-duration"];
-        $meet_data = $_POST["date"];
-        $start_hour = $_POST["start-hour"];
-        $end_hour = $_POST["end-hour"];
-        $meet_address_type = $_POST["meet_address_type"];
-        $meet_address = $_POST["address"];
+
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+        } else {
+            $response = ["success" => false];
+            echo json_encode($response);
+        }
+
+        $meet_title = $data["meet_title"];
+        $subject = $data["subject"];
+        $avg_duration = $data["avg_duration"];
+        $meet_data = $data["meet_data"];  // TODO rename to meet_date
+        $start_hour = $data["start_hour"];
+        $end_hour = $data["end_hour"];
+        $meet_address_type = $data["meet_address_type"];
+        $meet_address = $data["meet_address"];
 
         $start_hour_datetime = $meet_data." ".$start_hour;
         $end_hour_datetime = $meet_data." ".$end_hour;
@@ -287,6 +295,9 @@
                                  $message='', $start_hour_datetime, $end_hour_datetime,
                                  $meet_address_type, $meet_address);
         $room->createWaitingRoom();
+
+        $response = ["success" => true, "data" => $meet_title];
+        echo json_encode($response);
     }
 
     function get_waiting_rooms_given_teacher_id() {

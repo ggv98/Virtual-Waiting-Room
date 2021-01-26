@@ -6,36 +6,11 @@
 
     <link rel="stylesheet" href="css/user-style.css">
     <link rel="stylesheet" href="css/popup-form-style.css">
+    <link rel="stylesheet" href="css/teacher-style.css">
+
     <script defer src='script/check_session.js'></script>
     <script defer src="script/teacher_home_page.js"> </script>
     <script defer src="script/update_username.js"></script>
-
-
-
-    <style>
-
-        /* TODO think about exporting to external .css file */
-
-        .header {
-            margin-left: 10%;
-        }
-
-        input, select {
-            display: block;
-            width: 90%;
-            margin: 10px auto;
-        }
-
-        .room-info {
-            text-align: center;
-        }
-
-        /* .input-hour {
-            display: inline;
-            width: 45%;
-        } */
-
-    </style>
 
 </head>
 
@@ -59,14 +34,14 @@
              <!--<div id="add-room-button" class="room" onclick="openForm(0)"> <p>+</p> </div> -->
         </div>
     </section>
-        <form id="create-exam-form"  class="form-popup">
+        <form onsubmit="return false;" id="create-exam-form"  class="form-popup">
             <h1>Създаване на стая</h1>
 
             <input id="meet-title" type="text" placeholder="Въведи заглавие на срещата" name="meet_title" required>
 
-            <input type="text" placeholder="Въведи име на предмет" name="subject" required>
+            <input id="subject" type="text" placeholder="Въведи име на предмет" name="subject" required>
 
-            <input type="number" placeholder="Въведи средна продължителност на среща" name="avg-duration" required>
+            <input id="avg-duration" type="number" placeholder="Въведи средна продължителност на среща" name="avg-duration" required>
 
             <label for="date"> Дата на среща </label>
             <input id="date" name="date" type="date" required>
@@ -77,15 +52,15 @@
             <label for="end-hour"> Край на среща </label>
             <input id="end-hour" name="end-hour" type="time" placeholder="Край" step="600" required>
 
-            <select name="meet_address_type" required>
+            <select id="meet_address_type" name="meet_address_type" required>
                 <option disabled selected value>Тип на среща</option>
                 <option>Онлайн</option>
                 <option>На място</option>
             </select>
 
-            <input type="text" placeholder="Адрес" name="address" required>
+            <input id="address" type="text" placeholder="Адрес" name="address" required>
 
-            <button onsubmit="addRoomToView()" type="submit" class="btn">Създаване</button>
+            <button id="submitBtn" type="submit" class="btn">Създаване</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
 
         </form>

@@ -1,0 +1,13 @@
+.header {
+    margin-left: 10%;
+}
+
+input, select {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+}
+
+.room-info {
+    text-align: center;
+}
