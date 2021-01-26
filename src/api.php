@@ -31,9 +31,18 @@
     } elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
         $db = new Database();
         $query = $db->selectWaitingRoomsGivenTeacherIdQuery(["teacherId" => $_SESSION["userId"]]);
-        $queryRes = $query["data"]->fetch(PDO::FETCH_ASSOC);
+        
+        $queryRes = [];
+        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+            array_push($queryRes, $row);
+        }
 
-        $response = ["success" => false, "data" => $queryRes];
+        if (empty($queryRes)) {
+            $response = ["success" => false];
+        } else {
+            $response = ["success" => true, "data" => $queryRes];
+        }
+
         echo json_encode($response);
     }
      else {

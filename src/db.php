@@ -63,7 +63,7 @@
             $this->selectWaitingRoomsGivenTeacherIdStatement = $this->connection->prepare($sql);
 
         }
-// USERS QUERY
+        // USERS QUERY
         public function insertUserQuery($data) {
             try {
                 // ["user" => "...", "password => "...", :email => ",,,"]
@@ -76,6 +76,7 @@
             }
         }
         
+        // TODO would be better if we pass the userId as function parameter
         public function selectUserByIdQuery($data) {
             try {
                 // ["id" => "..."]
