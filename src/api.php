@@ -1,7 +1,9 @@
 <?php
+    require_once "db.php";
     require_once "user.php";
     require_once "utility.php";
     require_once "student_info.php";
+    require_once "waiting_room.php";
 
     session_start();
 
@@ -11,21 +13,34 @@
 
     if(preg_match("/login$/", $requestURL)) {
         login();
-    } elseif(preg_match("/register$/", $requestURL)) {
+    } 
+    elseif(preg_match("/register$/", $requestURL)) {
         register();
-    } elseif(preg_match("/save_user_info$/", $requestURL)) {
+    } 
+    elseif(preg_match("/save_user_info$/", $requestURL)) {
         save_user_info();
-    } elseif(preg_match("/session$/", $requestURL)) {
+    } 
+    elseif(preg_match("/session$/", $requestURL)) {
         session();
-    } elseif(preg_match("/image-upload$/", $requestURL)) {
+    } 
+    elseif(preg_match("/image-upload$/", $requestURL)) {
         upload_image();
     } 
     elseif(preg_match("/get-username$/", $requestURL)) {
         get_username();
-    } elseif(preg_match("/sign-up-for-meet$/", $requestURL)) {
+    } 
+    elseif(preg_match("/sign-up-for-meet$/", $requestURL)) {
         sign_up_for_meet();
-    } elseif(preg_match("/create-meet$/", $requestURL)) {
+    } 
+    elseif(preg_match("/create-meet$/", $requestURL)) {
         create_meet();
+    } 
+    elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
+        $teacherId = $_SESSION["userId"];
+        get_waiting_rooms_given_teacher_id($teacherId);
+    }
+    elseif(preg_match("/get-all-waiting-rooms$/", $requestURL)) {
+        get_all_waiting_rooms();
     }
      else {
         echo json_encode(["error" => "URL not found"]);
@@ -52,7 +67,7 @@
                     $_SESSION["userType"] = $user->getUserType();
                 } else {
                     $errors[] = $isUserValid["error"];
-                } 
+                }
             }
         } else {
             $errors[] = "Invalid request 1";
@@ -62,6 +77,7 @@
             $response = ["success" => false, "error" => $errors];
         } else {
             $stage = $user->getUserProfileFilledStage();
+            $stage["userType"] = $user->getUserType();
             $response = $stage;
         }
 
@@ -211,13 +227,67 @@
     }
 
     function sign_up_for_meet() {
-        echo $_POST["meet_type"]; // just to test
+        // echo $_POST;
+        echo "Hello world";
         // TODO
     }
 
     function create_meet() {
-        echo $_POST["meet_address_type"]; // just to test
-        // TODO
+        $teacher_id = $_SESSION["userId"];
+        $meet_title = $_POST["meet_title"];
+        $subject = $_POST["subject"];
+        $avg_duration = $_POST["avg-duration"];
+        $meet_data = $_POST["date"];
+        $start_hour = $_POST["start-hour"];
+        $end_hour = $_POST["end-hour"];
+        $meet_address_type = $_POST["meet_address_type"];
+        $meet_address = $_POST["address"];
+
+        $start_hour_datetime = $meet_data." ".$start_hour;
+        $end_hour_datetime = $meet_data." ".$end_hour;
+
+        $room = new waiting_room($teacher_id, $meet_title, $subject, $avg_duration,
+                                 $message='', $start_hour_datetime, $end_hour_datetime,
+                                 $meet_address_type, $meet_address);
+        $room->createWaitingRoom();
+
+    }
+
+    function get_waiting_rooms_given_teacher_id($teacherId) {
+        // TODO isolate in function
+        $db = new Database();
+        $query = $db->selectWaitingRoomsGivenTeacherIdQuery(["teacherId" => $teacherId]);
+        
+        $queryRes = [];
+        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+            array_push($queryRes, $row);
+        }
+
+        if (empty($queryRes)) {
+            $response = ["success" => false];
+        } else {
+            $response = ["success" => true, "data" => $queryRes];
+        }
+
+        echo json_encode($response);
+    }
+
+    function get_all_waiting_rooms() {
+        $db = new Database();
+        $query = $db->selectAllWaitingRoomsQuery();
+        
+        $queryRes = [];
+        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+            array_push($queryRes, $row);
+        }
+
+        if (empty($queryRes)) {
+            $response = ["success" => false];
+        } else {
+            $response = ["success" => true, "data" => $queryRes];
+        }
+
+        echo json_encode($response);
     }
 
     // function logout() {
