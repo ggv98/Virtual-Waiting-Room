@@ -62,6 +62,16 @@
             $sql = "SELECT * FROM waiting_room WHERE teacherID = :teacherId";
             $this->selectWaitingRoomsGivenTeacherIdStatement = $this->connection->prepare($sql);
 
+            $sql = "SELECT * FROM waiting_room WHERE id=:id";
+            $this->selectWaitingRoomByIdStatement = $this->connection->prepare($sql);
+
+            //meet-record Statement
+            $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=1";
+            $this->getLastStudentOnQueueStatement = $this->connection->prepare($sql);
+
+            $sql = "INSERT INTO meet_record(roomID, studentID, meetTime, reason) VALUES (:roomId, :studentId, :meetTime, :reason)";
+            $this->insertMeetRecordStatement = $this->connection->prepare($sql);
+
         }
         // USERS QUERY
         public function insertUserQuery($data) {
@@ -174,7 +184,7 @@
 
     public function selectWaitingRoomsGivenTeacherIdQuery($data) {
         try {
-            // ["id" => "..."]
+            // ["teacherID" => "..."]
             $this->selectWaitingRoomsGivenTeacherIdStatement->execute($data);
 
             return ["success" => true, "data" => $this->selectWaitingRoomsGivenTeacherIdStatement];
@@ -182,6 +192,38 @@
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+    public function selectWaitingRoomByIdQuery($data) {
+        try {
+            // ["id" => "..."]
+            $this->selectWaitingRoomByIdStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectWaitingRoomByIdStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+    public function getLastStudentOnQueueQuery($data) {
+        try {
+            // ["id" => "..."]
+            $this->getLastStudentOnQueueStatement->execute($data);
+
+            return ["success" => true, "data" => $this->getLastStudentOnQueueStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+    
+    public function saveMeetRecordQuery($data) {
+        try {
+    
+            $this->insertMeetRecordStatement->execute($data);
+
+            return ["success" => true];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+    
 }
 
 ?>

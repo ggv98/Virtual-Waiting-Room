@@ -37,15 +37,14 @@
 
             <form class="form-popup" id="form-exam-record">
                 <h1>Записване за среща</h1>
-
-                <select name="meet_type" class='dropdown-meet-type'>
-                    <option disabled selected value>Тип на среща</option>
+                <input id ="room-id" type="hidden" name='id'>
+                <select id="meet-type" name="meet_type" class='dropdown-meet-type'>
                     <option>Изпит</option>
                     <option>Консултация за проект</option>
                     <option>Нанасяне на оценка</option>
                 </select>
 
-                <button type="submit" class="btn">Запис</button>
+                <button type="submit" class="btn" id="submit-record">Запис</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
 
             </form>

@@ -90,13 +90,14 @@ class waiting_room {
         return $query;
     }
 
-    public function load() {
-        $query = $this->db->selectWaitingRoomQuery(["id" => $this->id]);
+    public function load($id) {
+        $query = $this->db->selectWaitingRoomByIdQuery(["id" => $id]);
 
         if ($query["success"]) {
             $room = $query["data"]->fetch(PDO::FETCH_ASSOC);
 
             if ($room) {
+                $this->id = $room['id'];
                 $this->teacherID = $room["teacherID"];
                 $this->title = $room["title"];
                 $this->subject = $room["subject"];
