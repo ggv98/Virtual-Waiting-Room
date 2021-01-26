@@ -1,12 +1,12 @@
 
         function openForm(room) {
-            document.getElementById("myForm").style.display = "block";
+            document.getElementById("create-exam-form").style.display = "inline-block";
 
             // TODO set the submit button of the form to update the next exam (in the up right corner)
         }
 
         function closeForm() {
-            document.getElementById("myForm").style.display = "none";
+            document.getElementById("create-exam-form").style.display = "none";
         }
 
 
@@ -33,10 +33,11 @@
 
         // TODO maybe isolate some functions that are common with student-home-page
         function displayResponseToView(rooms) {
-            for (room of rooms) {
-                displayRoom(room);
+            if (rooms){
+                for (room of rooms) {
+                    displayRoom(room);
+                }                
             }
-
             displayAddRoomButton();
 
             document.getElementById("add-room-button").addEventListener("click", openForm);

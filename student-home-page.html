@@ -9,8 +9,11 @@
 
         <link rel="stylesheet" href="css/user-style.css">
         <link rel="stylesheet" href="css/popup-form-style.css">
-        
-        <!-- <script defer src='script/register.js'></script> -->
+
+        <script defer src='script/check_session.js'></script>
+        <script defer src='script/update_username.js'></script>
+        <script defer src='script/student_forms_activity.js'></script>
+        <script defer src="script/student_home_page.js"></script>
 
     </head>
 
@@ -34,38 +37,22 @@
             <div id="rooms-container" class="rooms-container">
             </div>
 
-            <div class="form-popup" id="myForm">
-                <form id="form-exam-record" action="src/api.php/sign-up-for-meet" method="POST" class="form-container">
-                    <h1>Записване за среща</h1>
-    
-                    <select name="meet_type" class='dropdown-meet-type'>
-                        <option disabled selected value>Тип на среща</option>
-                        <option>Изпит</option>
-                        <option>Консултация за проект</option>
-                        <option>Нанасяне на оценка</option>
-                    </select>
-    
-                    <button type="submit" class="btn">Запис</button>
-                    <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
-    
-                </form>
-            </div>
-    
+            <form class="form-popup" id="form-exam-record">
+                <h1>Записване за среща</h1>
+
+                <select name="meet_type" class='dropdown-meet-type'>
+                    <option disabled selected value>Тип на среща</option>
+                    <option>Изпит</option>
+                    <option>Консултация за проект</option>
+                    <option>Нанасяне на оценка</option>
+                </select>
+
+                <button type="submit" class="btn">Запис</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
+
+            </form>
         </section>
 
-
-        <!-- TODO why not working one of the following scripts -->
-        <script src='script/check_session.js'></script>
-
-        <script src='script/update_username.js'></script>
-
-        <script src='script/student_forms_activity.js'></script>
-        
-
     </body>
-
-
-    <script src="script/student_home_page.js"></script>
-
 
 </html>

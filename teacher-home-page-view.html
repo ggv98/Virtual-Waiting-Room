@@ -6,6 +6,11 @@
 
     <link rel="stylesheet" href="css/user-style.css">
     <link rel="stylesheet" href="css/popup-form-style.css">
+    <script defer src='script/check_session.js'></script>
+    <script defer src="script/teacher_home_page.js"> </script>
+    <script defer src="script/update_username.js"></script>
+
+
 
     <style>
 
@@ -51,12 +56,10 @@
                 <p class="meet-title"> Math </p>
                 <p class="meet-start-end-hour"> 1-5 </p>
             </div> -->
-            <!-- <div id="add-room-button" class="room"> <p>+</p> </div>   -->
+             <!--<div id="add-room-button" class="room" onclick="openForm(0)"> <p>+</p> </div> -->
         </div>
     </section>
-
-    <div class="form-popup" id="myForm">
-        <form id="create-exam-form" action="src/api.php/create-meet" method="POST" class="form-container">
+        <form id="create-exam-form"  class="form-popup">
             <h1>Създаване на стая</h1>
 
             <input id="meet-title" type="text" placeholder="Въведи заглавие на срещата" name="meet_title" required>
@@ -86,13 +89,6 @@
             <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
 
         </form>
-    </div>
 
-    <!-- <script src="update_username.js"></script> -->
-
-    <script src="script/teacher_home_page.js"> </script>
-
-    <script src="script/update_username.js"></script>
-
-</body>
+    </body>
 </html>

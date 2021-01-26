@@ -1,11 +1,11 @@
 function openForm(room) {
-    document.getElementById("myForm").style.display = "block";
+    document.getElementById("form-exam-record").style.display = "inline-block";
 
     // TODO set the submit button of the form to update the next exam (in the up right corner)
 }
 
 function closeForm() {
-    document.getElementById("myForm").style.display = "none";
+    document.getElementById("form-exam-record").style.display = "none";
 }
 
 // TODO rename

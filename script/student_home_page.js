@@ -42,6 +42,7 @@
      room.classList.add("room");
      room.appendChild(node1);
      room.appendChild(node2);
+     room.onclick = function() { openForm() };
 
      document.getElementById("rooms-container").appendChild(room);
  }
