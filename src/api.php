@@ -13,55 +13,34 @@
 
     if(preg_match("/login$/", $requestURL)) {
         login();
-    } elseif(preg_match("/register$/", $requestURL)) {
+    } 
+    elseif(preg_match("/register$/", $requestURL)) {
         register();
-    } elseif(preg_match("/save_user_info$/", $requestURL)) {
+    } 
+    elseif(preg_match("/save_user_info$/", $requestURL)) {
         save_user_info();
-    } elseif(preg_match("/session$/", $requestURL)) {
+    } 
+    elseif(preg_match("/session$/", $requestURL)) {
         session();
-    } elseif(preg_match("/image-upload$/", $requestURL)) {
+    } 
+    elseif(preg_match("/image-upload$/", $requestURL)) {
         upload_image();
     } 
     elseif(preg_match("/get-username$/", $requestURL)) {
         get_username();
-    } elseif(preg_match("/sign-up-for-meet$/", $requestURL)) {
+    } 
+    elseif(preg_match("/sign-up-for-meet$/", $requestURL)) {
         sign_up_for_meet();
-    } elseif(preg_match("/create-meet$/", $requestURL)) {
+    } 
+    elseif(preg_match("/create-meet$/", $requestURL)) {
         create_meet();
-    } elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
-        // TODO isolate in function
-        $db = new Database();
-        $query = $db->selectWaitingRoomsGivenTeacherIdQuery(["teacherId" => $_SESSION["userId"]]);
-        
-        $queryRes = [];
-        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
-            array_push($queryRes, $row);
-        }
-
-        if (empty($queryRes)) {
-            $response = ["success" => false];
-        } else {
-            $response = ["success" => true, "data" => $queryRes];
-        }
-
-        echo json_encode($response);
-    } elseif(preg_match("/get-all-waiting-rooms$/", $requestURL)) {
-        // TODO isolate in function
-        $db = new Database();
-        $query = $db->selectAllWaitingRoomsQuery();
-        
-        $queryRes = [];
-        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
-            array_push($queryRes, $row);
-        }
-
-        if (empty($queryRes)) {
-            $response = ["success" => false];
-        } else {
-            $response = ["success" => true, "data" => $queryRes];
-        }
-
-        echo json_encode($response);
+    } 
+    elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
+        $teacherId = $_SESSION["userId"];
+        get_waiting_rooms_given_teacher_id($teacherId);
+    }
+    elseif(preg_match("/get-all-waiting-rooms$/", $requestURL)) {
+        get_all_waiting_rooms();
     }
      else {
         echo json_encode(["error" => "URL not found"]);
@@ -272,6 +251,43 @@
                                  $meet_address_type, $meet_address);
         $room->createWaitingRoom();
 
+    }
+
+    function get_waiting_rooms_given_teacher_id($teacherId) {
+        // TODO isolate in function
+        $db = new Database();
+        $query = $db->selectWaitingRoomsGivenTeacherIdQuery(["teacherId" => $teacherId]);
+        
+        $queryRes = [];
+        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+            array_push($queryRes, $row);
+        }
+
+        if (empty($queryRes)) {
+            $response = ["success" => false];
+        } else {
+            $response = ["success" => true, "data" => $queryRes];
+        }
+
+        echo json_encode($response);
+    }
+
+    function get_all_waiting_rooms() {
+        $db = new Database();
+        $query = $db->selectAllWaitingRoomsQuery();
+        
+        $queryRes = [];
+        while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+            array_push($queryRes, $row);
+        }
+
+        if (empty($queryRes)) {
+            $response = ["success" => false];
+        } else {
+            $response = ["success" => true, "data" => $queryRes];
+        }
+
+        echo json_encode($response);
     }
 
     // function logout() {
