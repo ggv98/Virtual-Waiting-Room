@@ -333,6 +333,15 @@
         
         $queryRes = [];
         while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+            $query2 = $db->getMeetRecordByRoomAndStudentQuery(["roomId"=> $row['id'], "studentId"=> $_SESSION['userId']]);
+            if($query2){
+                $data = $query2["data"]->fetch(PDO::FETCH_ASSOC);
+                if ($data){
+                    $row['isRegistered'] = true;
+                } else{
+                    $row['isRegistered'] = false;
+                }
+            }
             array_push($queryRes, $row);
         }
 

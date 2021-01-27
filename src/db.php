@@ -66,11 +66,14 @@
             $this->selectWaitingRoomByIdStatement = $this->connection->prepare($sql);
 
             //meet-record Statement
-            $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=1";
+            $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=:roomId";
             $this->getLastStudentOnQueueStatement = $this->connection->prepare($sql);
 
             $sql = "INSERT INTO meet_record(roomID, studentID, meetTime, reason) VALUES (:roomId, :studentId, :meetTime, :reason)";
             $this->insertMeetRecordStatement = $this->connection->prepare($sql);
+
+            $sql = "SELECT * FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
+            $this->selectMeetRecordByroomIdandStudentIdStatement = $this->connection->prepare($sql);
 
         }
         // USERS QUERY
@@ -221,6 +224,16 @@
             return ["success" => true];
         } catch(PDOException $e) {
             return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+    public function getMeetRecordByRoomAndStudentQuery($data) {
+        try {
+            // ["roomId" => "...", "studentId" => "..."]
+            $this->selectMeetRecordByroomIdandStudentIdStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectMeetRecordByroomIdandStudentIdStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" =>  $e->getMessage()];
         }
     }
     

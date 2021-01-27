@@ -5,6 +5,7 @@
  var res = fetch(url, settings)
          .then(response => response.json())
          .then(response => displayExistingRoomsToView(response["data"]))
+         //.then(response => console.log(response))
          .catch(error => console.log(error));
 
  setInterval(function() {
@@ -56,7 +57,11 @@ function clear_rooms(){
      var roomTitle = room["title"];
      var timeInterval = getRoomTimeInterval(room);
      var date =  getDate(room);
-     var roomLocation = room['address']
+     if(room['meetType'] == 0){
+        var roomLocation = 'Онлайн'
+     } else{
+         var roomLocation = room['address']
+     }
      var roomSubject = room['subject']
      
      var node1 = document.createElement("p");                 // Create a <li> node
@@ -79,7 +84,7 @@ function clear_rooms(){
      var node5 = document.createElement("p");
      node5.id = "room-time";
      node5.innerText = 'Време: ' + timeInterval;
-
+     
      var roomElem = document.createElement("div");
      roomElem.classList.add("room");
      roomElem.appendChild(node1);
@@ -87,6 +92,12 @@ function clear_rooms(){
      roomElem.appendChild(node3);
      roomElem.appendChild(node4);
      roomElem.appendChild(node5);
+     if (room['isRegistered']){
+        var node6 = document.createElement("p");
+        node6.id = "registrated";
+        node6.innerText = 'Записан';
+        roomElem.appendChild(node6);
+     }
      roomElem.onclick = function() { openForm(room['id']) };
 
      document.getElementById("rooms-container").appendChild(roomElem);
