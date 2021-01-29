@@ -91,7 +91,7 @@
             roomDisplayElement.appendChild(node1);
             roomDisplayElement.appendChild(node2);
 
-            roomId = room["id"];
+            var roomId = room["id"];
 
             roomDisplayElement.addEventListener("click", function f() 
                     {

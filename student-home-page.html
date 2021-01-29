@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="bg">
     <head>
         <meta charset="utf-8">
         <title>User home page</title>
@@ -20,16 +20,12 @@
         <header class="header">
             <section class="welcome-message"> 
                 Добре дошъл, <br>
-                <span id="user-name" class="name" class="user-info-text">user looser</span> 
+                <span id="user-name" class="name" class="user-info-text"></span> 
                 <span id='logout'>Изход</span>
             </section>
     
-                <img src="img/sofia-uni-logo.jpg">
-    
-                <div>
-                    <p> Очакван час на изпит: <span id="time-to-exam" class="user-info-text"> X </span> </p>
-                    <p> Следващ изпит: <span id="next-exam" class="user-info-text">1</span> </p>
-                </div>
+            <img id="su-logo" src="img/sofia-uni-logo.jpg">
+
         </header>
     
         <section class="main-content">
@@ -39,7 +35,9 @@
 
             <form class="form-popup" id="form-exam-record">
                 <h1>Записване за среща</h1>
+
                 <input id ="room-id" type="hidden" name='id'>
+
                 <select id="meet-type" name="meet_type" class='dropdown-meet-type'>
                     <option>Изпит</option>
                     <option>Консултация за проект</option>
@@ -48,8 +46,8 @@
 
                 <button type="submit" class="btn" id="submit-record">Запис</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
-
             </form>
+
         </section>
 
     </body>
