@@ -86,12 +86,24 @@
             node2.classList.add("room-info");
             node2.innerText = timeInterval;
 
-            var room = document.createElement("div");
-            room.classList.add("room");
-            room.appendChild(node1);
-            room.appendChild(node2);
+            var roomDisplayElement = document.createElement("div");
+            roomDisplayElement.classList.add("room");
+            roomDisplayElement.appendChild(node1);
+            roomDisplayElement.appendChild(node2);
 
-            document.getElementById("rooms-container").appendChild(room);
+            roomId = room["id"];
+
+            roomDisplayElement.addEventListener("click", function f() 
+                    {
+                        return redirectToWaitingRoom(roomId);
+                    }
+                );
+
+            document.getElementById("rooms-container").appendChild(roomDisplayElement);
+        }
+
+        function redirectToWaitingRoom(roomId) {
+            window.location = "waiting-room-view.html?roomId=" + roomId;
         }
 
         // adding room based on the form information

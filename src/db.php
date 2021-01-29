@@ -75,6 +75,8 @@
             $sql = "SELECT * FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
             $this->selectMeetRecordByroomIdandStudentIdStatement = $this->connection->prepare($sql);
 
+            $sql = "SELECT students_info.firstName, students_info.lastName FROM meet_record JOIN students_info ON meet_record.studentID=students_info.userID WHERE roomID=:roomId";
+            $this->selectStudentsGivenRoomIdStatement = $this->connection->prepare($sql);
         }
         // USERS QUERY
         public function insertUserQuery($data) {
@@ -236,6 +238,18 @@
             return ["success" => false, "error" =>  $e->getMessage()];
         }
     }
+
+    public function getMeetRecordByRoomIdQuery($data) {
+        try {
+            // ["roomId" => "...", "studentId" => "..."]
+            $this->selectStudentsGivenRoomIdStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectStudentsGivenRoomIdStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" =>  $e->getMessage()];
+        }
+    }
+    
     
 }
 

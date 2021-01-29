@@ -1,0 +1,90 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    background-color: greenyellow;
+    height: 15vh;
+    min-height: 100px;
+}
+
+button {
+    font-weight: normal;
+    font-size: 1.25rem;
+    margin: 1rem;
+    text-align: center;
+    border-radius: 15px;
+}
+
+#home-page-button {
+    background-color: green;
+}
+
+.main-content {
+    /* margin: 1rem 2rem ;
+    min-width: 250px; */
+    display:flex;
+}
+
+/* teacher name and user name style */
+.name {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: medium;
+    font-weight: bold;
+    font-style: normal;
+    color: #000000;
+    /* text-decoration: none; */
+    line-height: normal;
+}
+
+p {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: medium;
+    font-weight: normal;
+    font-style: normal;
+    color: #000000;
+    /* text-decoration: none; */
+    line-height: normal;
+    font-size: 1.25rem;
+}
+
+#current-student {
+    font-size: 1.5rem;
+    padding: 15px;
+}
+
+.header #current-student-img {
+    width: 120px;
+    height: 50px;
+}
+
+#info-side-bar {
+    background-color: greenyellow;
+    width: 20%;
+    min-width: 50px;
+    margin-top: 4vh;
+}
+
+.waiting-student {
+    height: 10vh;
+    text-align: center;
+    margin-bottom: 2vh;
+
+    border-style: solid;
+    border-color: green;
+}
+
+.waiting-student p {
+    font-size: 1.25rem;
+    line-height: 10vh;  /* Just like the height of waiting-student */
+    margin: 0;
+}
+
+#waiting-room-content {
+    text-align: center;
+    width: 100%;
+    margin-top: 10vh;
+}
+
+#welcome-button {
+    /* TODO */
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <link rel="stylesheet" href="css/waiting-room-style.css">
+
+    <script src="script/waiting-room-view.js" defer> </script>
+
+</head>
+
+<body>
+
+    <header class="header">
+        <div id="current-student">
+            <span> Your current student is: </span>
+            <img id="current-student-img" src="img/sofia-uni-logo.jpg">
+        </div>
+
+        <button id="home-page-button"> Home page </button>
+    </header>
+
+    <section class="main-content">
+        <div id="info-side-bar">
+            <!-- <div class="waiting-student">
+               <p> Student 1 </p>
+            </div>
+            <div class="waiting-student">
+                <p> Student 2 </p>
+             </div> -->
+        </div>
+
+        <div id="waiting-room-content">
+            <h2> Exam for current student is over ? </h2> 
+
+            <button id="welcome-button"> Welcome the next student </button>
+
+            <!-- TODO action -->
+            <form action="delayProcessing.php" method="POST">
+                <p> Having some delay ? Inform your following exam students about this (in minutes).</p>
+                <input type="number" name="teacher-delay">
+                <input type="submit">
+            </form>
+        </div>
+
+    </section>
+
+</body>
+</html>

@@ -46,6 +46,9 @@
     elseif(preg_match("/get-all-waiting-rooms$/", $requestURL)) {
         get_all_waiting_rooms();
     }
+    elseif(preg_match("/get-students-by-waiting-room$/", $requestURL)) {
+        get_students_by_waiting_room();
+    }
      else {
         echo json_encode(["error" => "URL not found"]);
     }
@@ -302,6 +305,7 @@
         echo json_encode($response);
     }
 
+    // getting waiting rooms for current session's teacher
     function get_waiting_rooms_given_teacher_id() {
         if($_SESSION && $_SESSION["userId"]){
                 $teacherId = $_SESSION["userId"];
@@ -349,6 +353,53 @@
             $response = ["success" => false];
         } else {
             $response = ["success" => true, "data" => $queryRes];
+        }
+
+        echo json_encode($response);
+    }
+
+    function get_students_by_waiting_room() {
+        $errors = [];
+        $response = [];
+        $db = new Database();
+
+        $students = [];
+
+        if ($_SESSION) {
+            if ($_POST) {
+                $data = json_decode($_POST["data"], true);
+                $roomId = testInput($data["roomId"]);
+
+                $room = new waiting_room();
+                $room->load($roomId);
+                $roomCreaterId = $room->getTeacherId();
+                $querierHasAccess = ($roomCreaterId == $_SESSION["userId"]);
+
+                if ($querierHasAccess) {
+
+                    $query = $db->getMeetRecordByRoomIdQuery(["roomId"=>$roomId]);
+                    if ($query['success']) {
+                        while ($data = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+                            array_push($students, $data);
+                        }
+                    } else {
+                        $errors[] = "Database Fail!";
+                    }
+                } else {
+                    $errors[] = "Invalid url!";
+                }
+
+            } else {
+                $errors[] = "Invalid request";
+            }
+        } else {
+            $errors[] = "Seems like session has expired";
+        }
+
+        if($errors) {
+            $response = ["success" => false, "error" => $errors];
+        } else {
+            $response = ["success" => true, "data" => $students];
         }
 
         echo json_encode($response);
