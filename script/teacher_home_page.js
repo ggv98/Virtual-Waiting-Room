@@ -134,6 +134,7 @@
 
             fetch(url, settings);
 
+            closeForm();
             updateView();
 
             return false;
