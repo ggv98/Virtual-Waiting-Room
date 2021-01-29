@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2021 at 08:17 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Generation Time: Jan 27, 2021 at 11:29 AM
+-- Server version: 10.4.16-MariaDB
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,6 +34,13 @@ CREATE TABLE `meet_record` (
   `reason` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `meet_record`
+--
+
+INSERT INTO `meet_record` (`roomID`, `studentID`, `meetTime`, `reason`) VALUES
+(3, 28, '2021-01-27 11:42:57', 'Изпит');
+
 -- --------------------------------------------------------
 
 --
@@ -57,9 +64,7 @@ CREATE TABLE `students_info` (
 --
 
 INSERT INTO `students_info` (`userID`, `firstName`, `lastName`, `degree`, `speciality`, `course`, `groupe`, `facultyNumber`, `Image`) VALUES
-(1, 'sg', 'sdfsdf', 'B', 'mat', 1, 1, '81611', 'Screenshot (13).png'),
-(2, 'Iwan', 'Ivan', 'B', 'mat', 1, 1, '81611', 'Screenshot (18).png'),
-(18, '324324', '234324', 'B', 'mat', 1, 1, '23434', NULL);
+(28, 'User', 'User', 'B', 'CS', 2, 8, '88888', 'Screenshot (4).png');
 
 -- --------------------------------------------------------
 
@@ -78,8 +83,7 @@ CREATE TABLE `teachers_info` (
 --
 
 INSERT INTO `teachers_info` (`userID`, `firstName`, `lastName`) VALUES
-(24, 'Teacher', 'Teacher'),
-(25, 'Teacher', 'Teacher');
+(27, 'Teacher', 'Teacher');
 
 -- --------------------------------------------------------
 
@@ -100,25 +104,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `userName`, `password`, `email`, `userType`) VALUES
-(1, 'ivan45', '$2y$10$VB.RUwanSB9Eaha0GB8reOBlaF2kiJhDI6x99QNOKPBoyqvfMgfT2', 'ggb98@abv.bg', 'Student'),
-(2, 'ivan454', '$2y$10$cYizTtsYj2VWvKxCZNLRhunpfijyunLNrrwxCOAIsnKirf8gBWpue', 'ggb98@abv.bg', 'Student'),
-(3, 'ivan4544', '$2y$10$NZSJpMiVsqF4IDKhfpt4d.XaPJoDP0YWL/EymRd7QfnbpT524LFai', 'ggb98@abv.bg', 'Student'),
-(5, 'dsfdssdf', '$2y$10$BuqDbj.dOtLAERft2K/UAu4VmQ5FhFwWp.BJEHlRUFiyX3FI3.44S', 'ggb98@abv.bg', 'Student'),
-(6, 'dsfdssdfsdf', '$2y$10$Hq.YnyPrlo8giZq/wf6/M.4ykvTpIvuqW4Y/Q6b.zjGT96exO45DG', 'ggb98@abv.bg', 'Student'),
-(7, 'dsfdssdfsdfsad', '$2y$10$dv2WQF1uukcvKtLOADf7quEyXx7/./pJM1Cl9VB0JJBHPrMnakP9y', 'ggb98@abv.bg', 'Student'),
-(8, 'dsfdssdfsdfsadzdcf', '$2y$10$wcKHVT0jBVZF03IWBD/tF.ipwP609UV06.70Er/bI9IGupC.aCv2.', 'ggb98@abv.bg', 'Student'),
-(9, 'asfsdf', '$2y$10$K0gMgB6ywwsxHTpth3o2iefH/lD1Co28.6kDva3lkYZLgvQfhp5my', 'ggb98@abv.bg', 'Student'),
-(10, 'sedfsdfsdf', '$2y$10$XNa3q1Z0walVW5t54scSO.oHDsAfEYICwmyyy.FuTBfXFTgA863pq', 'ggb98@abv.bg', 'Student'),
-(11, 'dsfsdfgdsg', '$2y$10$kzHtbJZ3RopbbpvUaj.BROQ4qm5WsuDkcepVv1XtXFmccfX13HoJy', 'ggb98@abv.bg', 'Student'),
-(12, 'ivan75', '$2y$10$Rk/KPUXP6wGyZVVZdTZip.1CqIhFoLHGjPWKbADalvPIz8jKvjScW', 'ggb98@abv.bg', 'Student'),
-(13, 'srxdtcfyvgubhinj', '$2y$10$OOGQZLBcIjF.YhUMsQkcOegO50MbduY0UMhDBdJdA5vbAfe/Lp9vG', 'ggb98@abv.bg', 'Student'),
-(14, 'jkbhihb', '$2y$10$aOjQUp2KHX7Ue3Io58hRkuYl.OA9Gbh2D/CaS4ODXDcn07S.nk46G', 'ggb98@abv.bg', 'Student'),
-(15, 'srxdtcfyvgu', '$2y$10$nLu0Zjcaqfn6hUdnWGmc7exOs4VPMSDn0SrQVNMfb2QfrQqjqdoNO', 'ggb98@abv.bg', 'Student'),
-(16, 'nkbhb55', '$2y$10$eaQ/jj0oqR53KTg8Mg70DuWux6Vjx3IxOLo9s1TKRoElwR73zrzjC', 'ggb98@abv.bg', 'Student'),
-(17, 'sdfsdfsd', '$2y$10$clsQarEKoDBR264W9f7n7udl/aQMy8dSKOsz9O/ldmcx6jyw11xDO', 'ggb98@abv.bg', 'Student'),
-(18, 'georgi12', '$2y$10$ZqJikORbeIkE3ym2xB4YWu858kOKfeIIRjzQCF/4yINl7pt3yQ0z.', 'ggb98@abv.bg', 'Student'),
-(24, 'admin', '$2y$10$FI3TbXVH1A9j2ikC0HljkeUyeuCRZsWnRq0ynmzt1Qymqa7vVjvLi', 'admin@gmail.com', 'Teacher'),
-(25, 'admin2', '$2y$10$GltxCAAZeTPvipfKAtrVhuO8xzn7dPMxZ78zfn9KKLMGQL.rdUUda', 'admin@gmail.com', 'Teacher');
+(27, 'admin', '$2y$10$YCWi7ByYR9M2h1nT8wHdc.ZCkyDtG./4fHfBk4LaOlNcIuUorJlPK', 'admin@gmail.com', 'Teacher'),
+(28, 'user99', '$2y$10$oFq7q/q/XbCycdPKrVnOy.fWO7K1z8/nZVAAzSgMWO1AkxZy4UuqK', 'user@gmail.com', 'Student');
 
 -- --------------------------------------------------------
 
@@ -138,6 +125,14 @@ CREATE TABLE `waiting_room` (
   `address` varchar(256) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `waiting_room`
+--
+
+INSERT INTO `waiting_room` (`teacherID`, `title`, `subject`, `avgDuration`, `message`, `startTime`, `endTime`, `meetType`, `address`, `id`) VALUES
+(27, 'Изпит', 'WEB Технологии', 15, '', '2021-01-27 12:30:00', '2021-01-27 17:30:00', 0, 'https://meet.google.com/yon-myik-vvy', 3),
+(27, 'Консултация за проект', 'WEB Технологии', 15, '', '2021-01-27 09:30:00', '2021-01-27 12:30:00', 0, 'https://meet.google.com/yon-myik-vvy', 4);
 
 --
 -- Indexes for dumped tables
@@ -169,13 +164,13 @@ ALTER TABLE `waiting_room`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `waiting_room`
 --
 ALTER TABLE `waiting_room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

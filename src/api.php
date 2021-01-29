@@ -6,6 +6,7 @@
     require_once "waiting_room.php";
 
     session_start();
+    date_default_timezone_set('Europe/Sofia');
 
     header("Content-type: application/json");
 
@@ -45,6 +46,9 @@
     }
     elseif(preg_match("/get-all-waiting-rooms$/", $requestURL)) {
         get_all_waiting_rooms();
+    }
+    elseif(preg_match("/get-room-details$/", $requestURL)) {
+        get_room_details();
     }
      else {
         echo json_encode(["error" => "URL not found"]);
@@ -243,10 +247,12 @@
             $query = $db->getLastStudentOnQueueQuery(["roomId"=>$roomId]);
             if ($query['success']){
                 $data = $query["data"]->fetch(PDO::FETCH_ASSOC);
-                if ($data){
+                if ($data['time']){
                     $meetTime = new DateTime($data['time']);
                     $meetTime->modify("+{$waitingRoom->getAvgDuration()} minutes");
                     $meetTime = $meetTime->format('Y-m-d H:i:s');
+                } elseif($waitingRoom->getStartTime()<date('Y-m-d H:i:s')){
+                    $meetTime = date('Y-m-d H:i:s');
                 } else{
                     $meetTime = $waitingRoom->getStartTime();
                 }
@@ -338,6 +344,7 @@
                 $data = $query2["data"]->fetch(PDO::FETCH_ASSOC);
                 if ($data){
                     $row['isRegistered'] = true;
+                    $row['meetTime'] = $data['meetTime'];
                 } else{
                     $row['isRegistered'] = false;
                 }
@@ -349,6 +356,71 @@
             $response = ["success" => false];
         } else {
             $response = ["success" => true, "data" => $queryRes];
+        }
+
+        echo json_encode($response);
+    }
+
+
+    function get_room_details() {
+        $errors = [];
+        $response = [];
+        $db = new Database();
+        
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            
+            $roomId = $data['roomId'];
+            $currentUser = NULL;
+            $queue = [];
+
+            $roomQuery = $db->selectWaitingRoomByIdQuery(["id" => $roomId]);
+            if ($roomQuery["success"]) {
+                $waitingRoom = $roomQuery["data"]->fetch(PDO::FETCH_ASSOC);
+            }
+
+            $query = $db->getQueueByRoomIdQuery(["roomId"=>$roomId]);
+
+            while ($row = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+                if($row["studentID"]==$_SESSION['userId']){
+                   $currentUser = $row;
+                }
+                array_push($queue, $row);
+            }
+
+        } else {
+            $errors[] = "Invalid request";
+        }
+
+        if($errors) {
+            $response = ["success" => false, "error" => $errors];
+        } else {
+            $response = ["success" => true, "data" => ["room" => $waitingRoom, "currentUser" => $currentUser, "queue" => $queue]];
+        }
+
+        echo json_encode($response);
+    }
+
+    // DO NOT USE IT IT CAN HELP YOU WITH UPDATING QUEUE TIMES
+    function add_delay(){
+        $response = [];
+        $db = new Database();
+        
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            
+            $roomId = $data['roomId'];
+            $delay = $data['delay'];
+
+            $query = $db->addDelayInQueueQuery(["id" => $roomId, "delay" => $delay]);
+            if ($query["success"]) {
+                $response = ["success" => true];
+            } else {
+                $response = $query;
+            }
+
+        } else {
+            $response = ["success" => false];
         }
 
         echo json_encode($response);

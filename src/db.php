@@ -75,6 +75,14 @@
             $sql = "SELECT * FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
             $this->selectMeetRecordByroomIdandStudentIdStatement = $this->connection->prepare($sql);
 
+            $sql = "SELECT * FROM meet_record JOIN students_info on studentID=userID 
+                                WHERE roomID=:roomId 
+                                ORDER BY meetTime ASC";
+            $this->getQueueByRoomIdStatement = $this->connection->prepare($sql);
+
+            $sql = "UPDATE meet_record SET meetTime = ADDTIME(meetTime, :delay) WHERE roomID = :id";
+            $this->addDelayInQueueStatement = $this->connection->prepare($sql);
+
         }
         // USERS QUERY
         public function insertUserQuery($data) {
@@ -215,6 +223,17 @@
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
+    public function getQueueByRoomIdQuery($data){
+        try {
+            // ["roomId" => "..."]
+            $this->getQueueByRoomIdStatement->execute($data);
+
+            return ["success" => true, "data" => $this->getQueueByRoomIdStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
     
     public function saveMeetRecordQuery($data) {
         try {
@@ -226,6 +245,18 @@
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+        
+    public function addDelayInQueueQuery($data) {
+        try {
+    
+            $this->addDelayInQueueStatement->execute($data);
+
+            return ["success" => true];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
     public function getMeetRecordByRoomAndStudentQuery($data) {
         try {
             // ["roomId" => "...", "studentId" => "..."]

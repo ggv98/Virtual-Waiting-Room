@@ -33,6 +33,7 @@ function recordForMeet(data){
     closeForm();
     if(data.success){
         alert(`Успешно се записахте в опашката за ${data.data.roomTitle} вашият ред е в ${data.data.meetTime} часа`);
+        update();
     } else{
         alert(`Грешка ${data.error} Моля опитайте отново`);
     }
@@ -48,25 +49,5 @@ function closeForm() {
     document.getElementById("form-exam-record").style.display = "none";
 }
 
-// TODO rename
-function addEventOpenForm(elem, text) {
-    elem.onclick = function() {
-        nextExam = document.getElementById("next-exam").innerHTML;
-
-        if (nextExam == text) {
-            alert("This is the next exam");
-        } else {
-            openForm(text);
-        }
-    }
-}
-
-rooms = document.getElementsByClassName("room");
-roomsNames = []
-for(var i = 0; i < rooms.length; i++) {
-    text = rooms[i].textContent;
-    
-    addEventOpenForm(rooms[i], text);
-}
 
 // TODO form for updating information about yet assigned exam. Maybe if student will be late, will skip the exam or will come in another day ?
