@@ -1,3 +1,5 @@
+// TODO rename to teacher-room.js
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const roomId = urlParams.get('roomId')
@@ -30,7 +32,7 @@ setInterval(function() {
 function loadDeatails(response){
     if (response['success']) {
         loadRoomDetails(response['data']["room"]);
-        // loadWaitingTimeLeft(response['data']["currentUser"]);
+        loadWaitingTimeLeft(response['data']["room"]);
         loadQueue(response['data']['queue']);
 
     } else {
@@ -51,13 +53,13 @@ function loadRoomDetails(room){
     document.getElementById('message').innerHTML= message;
 }
 
-// function loadWaitingTimeLeft($user){
-//     var meetTime = new Date($user['meetTime'])
-//     var currentTime = new Date ()
-//     var leftTime =convertSecondsToHourandMinutes((meetTime - currentTime));
-//     document.getElementById('timer').innerHTML= leftTime;
-
-// }
+function loadWaitingTimeLeft(room){
+    var meetTime = new Date(room['startTime']);
+    console.log(meetTime);
+    var currentTime = new Date ();
+    var leftTime = convertSecondsToHourandMinutes((meetTime - currentTime));
+    document.getElementById('timer').innerHTML= leftTime;
+}
 
 function convertSecondsToHourandMinutes(miliseconds){
     var seconds = parseInt(miliseconds/1000, 10); 
