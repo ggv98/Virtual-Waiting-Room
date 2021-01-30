@@ -11,6 +11,18 @@
         <script defer src='script/update_username.js'></script>
         <script defer src='script/waiting-room-view.js'></script>
 
+
+        <style>
+            #current-student-details {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center; 
+                width: 35%;
+                height: 450px;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -31,12 +43,18 @@
             <h3 id='room_subject'>Предмет: Неизвестен</h3>
 
             <main id="room-information" class="room-information">
+
+
                 <section id='timer-section'>
+                    
+                    <p> Proba </p>
+
                     <div id='timer-circle'>
                         <p id='timer-title'>Оставащо време:</p>
                         <p id='timer'>00:00</p>
                     </div>
                 </section>
+
                 <section id='queue'>
                     <p class='section-title'>Опашка от чакащи</p>
                     <!-- Queue element -->

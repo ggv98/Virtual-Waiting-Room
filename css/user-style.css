@@ -74,6 +74,7 @@ p {
     width: 90%;
     min-height: 350px;
 }
+
 .room-information{
     display: flex;
     flex-direction: row;
@@ -82,12 +83,14 @@ p {
     background-color: #4daf7c;
     min-height:480px;
 }
+
 #room_name, #room_subject {
     margin: 3px;
 }
 
-#timer-section{
+#timer-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; 
     width: 35%;

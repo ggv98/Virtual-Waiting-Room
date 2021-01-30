@@ -53,7 +53,7 @@
     elseif(preg_match("/get-room-details$/", $requestURL)) {
         get_room_details();
     }
-     else {
+    else {
         echo json_encode(["error" => "URL not found"]);
     }
 
