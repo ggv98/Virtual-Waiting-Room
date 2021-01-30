@@ -26,7 +26,7 @@
         function updateView() {
             var url = 'src/api.php/get-teacher-waiting-rooms';
             var settings = {method: 'POST'};
-
+ 
             document.getElementById("rooms-container").innerHTML = "";  // remove all children
 
             var res = fetch(url, settings)
@@ -56,7 +56,7 @@
             date = new Date(room["endTime"]);
             var endHour = date.getHours() + ":" + date.getMinutes();
             
-            var timeInterval = startHour + " - " + endHour;
+            var timeInterval = date.toDateString() + " " + startHour + " - " + endHour;
             
             return timeInterval;
         }

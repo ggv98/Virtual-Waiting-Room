@@ -53,6 +53,9 @@
     elseif(preg_match("/get-room-details$/", $requestURL)) {
         get_room_details();
     }
+    elseif(preg_match("/delete-expired-waiting-rooms$/", $requestURL)) {
+        delete_expired_waiting_rooms();
+    }
     else {
         echo json_encode(["error" => "URL not found"]);
     }
@@ -485,5 +488,20 @@
         } else {
             echo json_encode(["success" => false]);
         }
+    }
+
+    function delete_expired_waiting_rooms() {
+        $db = new Database();
+        $query = $db->deleteExpiredWaitingRoomsQuery();
+
+        if ($query['success']) {
+            $query["data"]->fetch(PDO::FETCH_ASSOC);
+            
+            $response = ['success' => true];
+        } else {
+            $response = ['success' => false, 'error' => "Database failed"];
+        }
+
+        echo json_encode($response);
     }
 ?>

@@ -65,6 +65,9 @@
             $sql = "SELECT * FROM waiting_room WHERE id=:id";
             $this->selectWaitingRoomByIdStatement = $this->connection->prepare($sql);
 
+            $sql = "DELETE FROM waiting_room WHERE endTime < CURDATE()";
+            $this->deleteExpiredWaitingRoomStatement = $this->connection->prepare($sql);
+
             //meet-record Statement
             $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=:roomId";
             $this->getLastStudentOnQueueStatement = $this->connection->prepare($sql);
@@ -158,8 +161,7 @@
         }
 
 
-// WAITING ROOMS QUERY
-
+    // WAITING ROOMS QUERY
     public function createWaitingRoomQuery($data) {
         try {
             // ["teacherID" => "...", "title => "...", :subject => ",,,"..........]
@@ -205,6 +207,7 @@
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
     public function selectWaitingRoomByIdQuery($data) {
         try {
             // ["id" => "..."]
@@ -215,6 +218,20 @@
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
+    public function deleteExpiredWaitingRoomsQuery() {
+        try {
+            // ["id" => "..."]
+            $this->deleteExpiredWaitingRoomStatement->execute();
+
+            echo "Probaa";
+
+            return ["success" => true, "data" => $this->deleteExpiredWaitingRoomStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
     public function getLastStudentOnQueueQuery($data) {
         try {
             // ["id" => "..."]
