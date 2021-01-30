@@ -29,7 +29,7 @@ setInterval(function() {
     updatePageDetails();
  }, 10000);
 
-function loadDeatails(response){
+function loadDeatails(response) {
     if (response['success']) {
         loadRoomDetails(response['data']["room"]);
         loadWaitingTimeLeft(response['data']["room"]);
@@ -53,12 +53,31 @@ function loadRoomDetails(room){
     document.getElementById('message').innerHTML= message;
 }
 
-function loadWaitingTimeLeft(room){
+function loadWaitingTimeLeft(room) {
+    if (examHasStarted(room)) {
+        removeClockFromDisplay();
+    } else {
+        var meetTime = new Date(room['startTime']);
+        var currentTime = new Date ();
+        var leftTime = convertSecondsToHourandMinutes(meetTime - currentTime);
+        document.getElementById('timer').innerHTML= leftTime;
+    }
+}
+
+function examHasStarted(room) {
     var meetTime = new Date(room['startTime']);
-    console.log(meetTime);
     var currentTime = new Date ();
-    var leftTime = convertSecondsToHourandMinutes((meetTime - currentTime));
-    document.getElementById('timer').innerHTML= leftTime;
+    var secondsLeft = meetTime - currentTime;
+
+    if (secondsLeft < 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function removeClockFromDisplay() {
+    document.getElementById("timer-circle").style.display = "None";
 }
 
 function convertSecondsToHourandMinutes(miliseconds){
