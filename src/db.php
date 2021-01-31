@@ -224,8 +224,6 @@
             // ["id" => "..."]
             $this->deleteExpiredWaitingRoomStatement->execute();
 
-            echo "Probaa";
-
             return ["success" => true, "data" => $this->deleteExpiredWaitingRoomStatement];
         } catch(PDOException $e) {
             return ["success" => false, "error" => $e->getMessage()];
