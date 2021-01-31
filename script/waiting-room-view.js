@@ -21,9 +21,9 @@ function updatePageDetails(){
         body: `data=${JSON.stringify(room)}`
     };
     var res = fetch(url, settings)
-    .then(response => response.json())
-    .then(response => loadDeatails(response))
-    .catch(error => console.log(error));
+        .then(response => response.json())
+        .then(response => loadDeatails(response))
+        .catch(error => console.log(error));
 }
 
 updatePageDetails()
@@ -147,6 +147,7 @@ function loadQueue(queue){
     }
 
 }
+
 function clearQueue(){
     var queue = document.getElementById("queue");
     queue.innerHTML = "";

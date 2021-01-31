@@ -56,6 +56,9 @@
     elseif(preg_match("/delete-expired-waiting-rooms$/", $requestURL)) {
         delete_expired_waiting_rooms();
     }
+    elseif(preg_match("/get-userId$/", $requestURL)) {
+        get_userId();
+    }
     else {
         echo json_encode(["error" => "URL not found"]);
     }
@@ -230,9 +233,26 @@
             } else {
                 $username = "No user";
             }
-            $response = ["success" => $username, "data" => $username];
+            $response = ["success" => true, "data" => $username];
         } else {
-            $response = ["success" => false, "data" => "Helo world error"];
+            $response = ["success" => false, "data" => "No existing session"];
+        }
+
+        echo json_encode($response);
+    }
+
+    function get_userId() {
+        $userId;
+
+        if ($_SESSION) {
+            if ($_SESSION["username"]) {
+                $userId = $_SESSION["userId"];
+            } else {
+                $userId = "No user";
+            }
+            $response = ["success" => true, "data" => $userId];
+        } else {
+            $response = ["success" => false, "data" => "No existing session"];
         }
 
         echo json_encode($response);
