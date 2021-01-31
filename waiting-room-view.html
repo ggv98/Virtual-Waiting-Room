@@ -6,24 +6,11 @@
         <title>User home page</title>
 
         <link rel="stylesheet" href="css/user-style.css">
+        <link rel="stylesheet" href="css/waiting-room-style.css">
 
         <script defer src='script/check_session.js'></script>
         <script defer src='script/update_username.js'></script>
         <script defer src='script/waiting-room-view.js'></script>
-
-
-        <style>
-
-            #waiting-room-current-state {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center; 
-                width: 35%;
-                height: 450px;
-            }
-
-        </style>
 
     </head>
 
@@ -47,8 +34,10 @@
             <main id="room-information" class="room-information">
 
                 <section id='waiting-room-current-state'>
-                    <!-- <p id='current-student-name' class='section-title'> Current student name </p> -->
-                    <!-- <img src="..."> -->
+                    <p class='current-student-info section-title'> Име на студент </p>
+                    <img class='current-student-info' src="...">
+
+                    <button id='welcome-student-button'> Покани студент </button>
 
                     <div id='timer-circle'>
                         <p id='timer-title'> Оставащо време: </p>

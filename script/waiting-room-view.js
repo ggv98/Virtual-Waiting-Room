@@ -2,7 +2,9 @@
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const roomId = urlParams.get('roomId')
+const roomId = urlParams.get('roomId');
+
+// attach event handler onclick on the welcomeButton
 
 function updatePageDetails(){
 
@@ -56,6 +58,7 @@ function loadRoomDetails(room){
 function loadWaitingTimeLeft(room) {
     if (examHasStarted(room)) {
         removeClockFromDisplay();
+        showWelcomeButton();
     } else {
         var meetTime = new Date(room['startTime']);
         var currentTime = new Date ();
@@ -74,6 +77,40 @@ function examHasStarted(room) {
     } else {
         return false;
     }
+}
+
+// TODO call it on interval of 1 min
+function updateStudentsQueue() {
+    if (thereIsStudentInTheRoom()) {
+        // get start time (maybe this would be some global var), compare with current time 
+        // and eventually offset other students
+    }
+}
+
+function thereIsStudentInTheRoom() {
+    // TODO
+    return false;
+}
+
+function onStudentEnter() {
+    // Set the view with his image and name
+    //   and cache the start time (and use it to check if there is already expiration of 
+    //   time, and if such expiration exists then offset all the rest students' starting exam hours)
+}
+
+function showWelcomeButton() {
+    document.getElementById("welcome-student-button").style.display = "inline-block";
+}
+
+document.getElementById("welcome-student-button").onclick = onClickWelcomeButtonHandler();
+
+function onClickWelcomeButtonHandler() {
+    console.log("Just to test message");
+    // TODO
+    // if there is student
+    //  send invatation by Socket to first Student and await him 2min, 
+    //  if student accept the invitation
+    //      onStudentEnter()
 }
 
 function removeClockFromDisplay() {
@@ -98,7 +135,6 @@ function convertSecondsToHourandMinutes(miliseconds){
     seconds  -= mnts*60;
     return(sign + hrs+":" + mnts.toString().padStart(2, "0"));
 }
-
 
 function loadQueue(queue){
     clearQueue();
