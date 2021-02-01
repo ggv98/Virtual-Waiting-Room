@@ -37,6 +37,8 @@
             $sql = "SELECT * FROM users WHERE id=:id";
             $this->selectUserByIdStatement = $this->connection->prepare($sql);
             
+
+            
             // students_info Statements
             $sql = "SELECT * FROM students_info WHERE userID =:userId";
             $this->selectUserProfileInfo = $this->connection->prepare($sql);
@@ -47,6 +49,9 @@
 
             $sql = "UPDATE students_info SET Image=:image WHERE userID=:userId";
             $this->updateUserImageStatement = $this->connection->prepare($sql);
+
+
+
 
             // waiting_room Statements
             $sql = "INSERT INTO waiting_room(teacherID,	title, subject,	avgDuration, message, startTime, endTime, meetType,	address)
@@ -68,9 +73,15 @@
             $sql = "DELETE FROM waiting_room WHERE endTime < CURDATE()";
             $this->deleteExpiredWaitingRoomStatement = $this->connection->prepare($sql);
 
+
+
+
             //meet-record Statement
             $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=:roomId";
             $this->getLastStudentOnQueueStatement = $this->connection->prepare($sql);
+
+            $sql = "DELETE FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
+            $this->deleteMeetRecordStatement = $this->connection->prepare($sql);
 
             $sql = "INSERT INTO meet_record(roomID, studentID, meetTime, reason) VALUES (:roomId, :studentId, :meetTime, :reason)";
             $this->insertMeetRecordStatement = $this->connection->prepare($sql);
@@ -125,7 +136,7 @@
             }
         }
 
-// User INFO QUERY
+        // User INFO QUERY
 
         public function insertUserInfoQuery($data) {
             try {
@@ -295,8 +306,18 @@
             return ["success" => false, "error" =>  $e->getMessage()];
         }
     }
-    
-    
+
+    public function deleteMeetRecordQuery($data) {
+        try {
+            // ["roomId" => "...", "studentId" => "..."]
+            $this->deleteMeetRecordStatement->execute($data);
+
+            return ["success" => true, "data" => $this->deleteMeetRecordStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" =>  $e->getMessage()];
+        }
+    }
+
 }
 
 ?>

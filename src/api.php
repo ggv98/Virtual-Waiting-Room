@@ -38,9 +38,9 @@
     elseif(preg_match("/create-meet$/", $requestURL)) {
         create_meet();
     }
-    elseif(preg_match("/meet-record$/", $requestURL)) {
-        create_meet_record();
-    }
+    // elseif(preg_match("/meet-record$/", $requestURL)) {
+    //     create_meet_record();
+    // }
     elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
         get_waiting_rooms_given_teacher_id();
     }
@@ -58,6 +58,30 @@
     }
     elseif(preg_match("/get-userId$/", $requestURL)) {
         get_userId();
+    }
+    elseif(preg_match("/delete-meet-record$/", $requestURL)) {
+
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            
+            $roomId = $data["roomId"];
+            $userId = $data["userId"];
+            
+            $db = new Database();
+            // get room id and studentId
+            $queryData = ["roomId" => $roomId,
+                           "studentId" => $userId];
+
+            $query = $db->deleteMeetRecordQuery($queryData);
+            if ($query['success']) {
+                $query["data"]->fetch(PDO::FETCH_ASSOC);
+            
+                $response = ['success' => true];
+            } else {
+                $response = ['success' => false, 'error' => "Database failed"];
+            }
+        }
+        echo json_encode($response);
     }
     else {
         echo json_encode(["error" => "URL not found"]);

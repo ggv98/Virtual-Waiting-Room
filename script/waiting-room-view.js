@@ -102,17 +102,6 @@ function showWelcomeButton() {
     document.getElementById("welcome-student-button").style.display = "inline-block";
 }
 
-document.getElementById("welcome-student-button").onclick = onClickWelcomeButtonHandler();
-
-function onClickWelcomeButtonHandler() {
-    console.log("Just to test message");
-    // TODO
-    // if there is student
-    //  send invatation by Socket to first Student and await him 2min, 
-    //  if student accept the invitation
-    //      onStudentEnter()
-}
-
 function removeClockFromDisplay() {
     document.getElementById("timer-circle").style.display = "None";
 }
