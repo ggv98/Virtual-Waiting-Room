@@ -50,6 +50,22 @@
                 <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
             </form>
 
+            <div id="invitation-pop-up" class="form-popup">
+                <h1>Записване за среща</h1>
+
+                <input id ="room-id" type="hidden" name='id'>
+
+                <select id="meet-type" name="meet_type" class='dropdown-meet-type'>
+                    <option>Изпит</option>
+                    <option>Консултация за проект</option>
+                    <option>Нанасяне на оценка</option>
+                </select>
+
+                <button type="submit" class="btn" id="submit-record">Запис</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
+            </div>
+
+
         </section>
 
     </body>

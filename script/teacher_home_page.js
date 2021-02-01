@@ -5,8 +5,6 @@
 
         function openForm(room) {
             document.getElementById("create-exam-form").style.display = "inline-block";
-
-            // TODO set the submit button of the form to update the next exam (in the up right corner)
         }
 
         function closeForm() {
