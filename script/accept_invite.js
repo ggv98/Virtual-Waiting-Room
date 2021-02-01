@@ -1,9 +1,11 @@
 var socket = new WebSocket('ws://localhost:8080');
-
+var myId;
+var senderId;
 
 document.getElementById("accept-invitation-btn").addEventListener("click", acceptInvitation);
 function acceptInvitation() {
-    socket.send("Student accepted");
+    // myId, senderId are initliazied in processInvitation
+    socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Accepted");
     document.getElementById("invitation-pop-up").style.display = "none";
 }
 
@@ -15,7 +17,7 @@ document.getElementById("dismiss-invitation-btn").addEventListener("click", clos
 function closeInvitation() {
     document.getElementById("invitation-pop-up").style.display = "none";
 
-    socket.send("Student denied!");
+    socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Denied");
 }
 
 socket.onmessage = function(e) {
@@ -36,6 +38,8 @@ function processInvitation(userId, invitationMessage) {
     let invitationIsForMe = (receiverId == userId);
 
     if (invitationIsForMe) {
+        senderId = extractSenderId(invitationMessage);
+        myId = userId;
         openInvitation();
         oneMinuteInvitationAvailable();
     }
@@ -71,4 +75,10 @@ function extractReceiverId(invitationMessage) {
     let receiverId = invitationMessage.split(" ")[1].
                                         split(":")[1];
     return receiverId;
+}
+
+function extractSenderId(invitationMessage) {
+    let senderId = invitationMessage.split(" ")[0].
+                                        split(":")[1];
+    return senderId;
 }

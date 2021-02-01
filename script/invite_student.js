@@ -18,7 +18,53 @@ function sendInvitationSenderReceiver(sender, receiver) {
 }
 
 socket.onmessage = function(e) {
-    alert( e.data );
+    var invitationResponse = e.data;
+    
+    var url = 'src/api.php/get-userId';
+    var settings = {method: 'POST'};
+
+    fetch(url, settings)
+        .then(response => response.json())
+        .then(response => processResponse(response.data, invitationResponse))
+        .catch(error => console.log(error));
+}
+
+function processResponse(myUserId, invitationResponse) {
+    let userIdReponseFor = extractReceiverId(invitationResponse);
+    let invitationIsForMe = (myUserId == userIdReponseFor);
+
+    if (invitationIsForMe) {
+        let answer = extractAnswer(invitationResponse);
+        if (answer == "Accepted") {
+            alert("User accepted your invitation!");
+            let url = "https://meet.google.com/yon-myik-vvy?authuser=1";
+            var win = window.open(url, '_blank');
+            win.focus();
+            // redirect to the room link if online
+            // dequeue (remove from database, reload the queue view and set the current user to be the removed one)
+            console.log("Student has accepted");
+        } else {
+            console.log("Student has dismissed the invitation");
+        }
+    }
+}
+
+function getMeetTypeInfo() {
+    fetch(url, settings)
+        .then(response => response.json())
+        .then(response => processInvitation(response.data, invitationMessage))
+        .catch(error => console.log(error));
+}
+
+function extractAnswer(invitationResponse) {
+    let answer = invitationResponse.split(" ")[2];
+    return answer;
+}
+
+function extractReceiverId(invitationMessage) {
+    let receiverId = invitationMessage.split(" ")[1].
+                                        split(":")[1];
+    return receiverId;
 }
 
 function sendInvitation(){
