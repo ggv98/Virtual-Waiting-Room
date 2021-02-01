@@ -14,7 +14,7 @@ function sendInvitationToStudent(studentID) {
 }
 
 function sendInvitationSenderReceiver(sender, receiver) {
-    socket.send("Sender id:" + sender + " Receiver id:" + receiver + " Ela da ti pisha 2kaa");
+    socket.send("Sender_id:" + sender + " Receiver_id:" + receiver + " Ela da ti pisha 2kaa");
 }
 
 socket.onmessage = function(e) {

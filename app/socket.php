@@ -28,7 +28,7 @@ class Socket implements MessageComponentInterface {
                 continue;
             }
 
-            $client->send( "Client $from->resourceId said $msg" );
+            $client->send($msg);
         }
     }
 

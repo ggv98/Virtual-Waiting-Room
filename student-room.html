@@ -57,18 +57,15 @@
             </main>
 
             <div id="invitation-pop-up" class="form-popup">
-                <h1>Записване за среща</h1>
+                <h1>Покана от преподавател</h1>
 
-                <input id ="room-id" type="hidden" name='id'>
+                <div id='invitation-timer-circle'>
+                    <p id='invitation-timer-title'>Оставащо време:</p>
+                    <p id='invitation-timer'>00:00</p>
+                </div>
 
-                <select id="meet-type" name="meet_type" class='dropdown-meet-type'>
-                    <option>Изпит</option>
-                    <option>Консултация за проект</option>
-                    <option>Нанасяне на оценка</option>
-                </select>
-
-                <button type="submit" class="btn" id="submit-record">Запис</button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
+                <button id="accept-invitation-btn" type="submit" class="btn">Приеми</button>
+                <button id="dismiss-invitation-btn" type="button" class="btn cancel">Затвори</button>
             </div>
             
         </section>
