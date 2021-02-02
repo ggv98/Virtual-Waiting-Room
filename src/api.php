@@ -60,28 +60,10 @@
         get_userId();
     }
     elseif(preg_match("/delete-meet-record$/", $requestURL)) {
-
-        if ($_POST) {
-            $data = json_decode($_POST["data"], true);
-            
-            $roomId = $data["roomId"];
-            $userId = $data["userId"];
-            
-            $db = new Database();
-            // get room id and studentId
-            $queryData = ["roomId" => $roomId,
-                           "studentId" => $userId];
-
-            $query = $db->deleteMeetRecordQuery($queryData);
-            if ($query['success']) {
-                $query["data"]->fetch(PDO::FETCH_ASSOC);
-            
-                $response = ['success' => true];
-            } else {
-                $response = ['success' => false, 'error' => "Database failed"];
-            }
-        }
-        echo json_encode($response);
+        delete_meet_record();        
+    }
+    elseif(preg_match("/get-room-by-id$/", $requestURL)) {
+        get_room_by_id();
     }
     else {
         echo json_encode(["error" => "URL not found"]);
@@ -548,4 +530,48 @@
 
         echo json_encode($response);
     }
+
+    function delete_meet_record() {
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            
+            $roomId = $data["roomId"];
+            $userId = $data["userId"];
+            
+            $db = new Database();
+            // get room id and studentId
+            $queryData = ["roomId" => $roomId,
+                        "studentId" => $userId];
+
+            $query = $db->deleteMeetRecordQuery($queryData);
+            if ($query['success']) {
+                $query["data"]->fetch(PDO::FETCH_ASSOC);
+            
+                $response = ['success' => true];
+            } else {
+                $response = ['success' => false, 'error' => "Database failed"];
+            }
+        }
+        echo json_encode($response);
+    }
+
+    function get_room_by_id() {
+        $db = new Database();
+
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            $roomId = $data["roomId"];
+
+            $query = $db->selectWaitingRoomByIdQuery(["id" => $roomId]);
+            if ($query['success']) {
+                $data = $query["data"]->fetch(PDO::FETCH_ASSOC);
+            
+                $response = ['success' => true, "data" => $data];
+            } else {
+                $response = ['success' => false, 'error' => "Database failed"];
+            }
+        }
+        echo json_encode($response);
+    }
+
 ?>

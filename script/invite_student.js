@@ -1,5 +1,8 @@
 // Create a new WebSocket.
 var socket = new WebSocket('ws://localhost:8080');
+var meetType;
+var meetAddress;
+
 document.getElementById("welcome-student-button").onclick = sendInvitation;
 
 function sendInvitationToStudent(studentID) {
@@ -16,10 +19,37 @@ function sendInvitationToStudent(studentID) {
 }
 
 function sendInvitationSenderReceiver(sender, receiver) {
+    var roomId = urlParams.get('roomId');
 
-    // TODO get type of the meet and link -> send it through the socket
+    var data = {
+        roomId
+    }
 
-    socket.send("Sender_id:" + sender + " Receiver_id:" + receiver + " Ela da ti pisha 2kaa");
+    var url = 'src/api.php/get-room-by-id';
+    var settings = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `data=${JSON.stringify(data)}`
+    };
+    
+    fetch(url, settings)
+        .then(response => response.json())
+        .then(response => response["data"])
+        .then(room => sendInvitationGivenFullData(sender, receiver, room))
+        .catch(error => console.log(error));
+
+}
+
+function sendInvitationGivenFullData(sender, receiver, room) {
+    if (room['meetType'] == 0) {
+        meetType = "Online";
+    }  else {
+        meetType = "FMI";
+    }
+    meetAddress = room["address"];
+    socket.send("Sender_id:" + sender + " Receiver_id:" + receiver + " " + meetType + " " + meetAddress);
 }
 
 socket.onmessage = function(e) {
@@ -30,11 +60,11 @@ socket.onmessage = function(e) {
 
     fetch(url, settings)
         .then(response => response.json())
-        .then(response => processResponse(response.data, invitationResponse))
+        .then(response => processResponseOnInvitation(response.data, invitationResponse))
         .catch(error => console.log(error));
 }
 
-function processResponse(myUserId, invitationResponse) {
+function processResponseOnInvitation(myUserId, invitationResponse) {
     let userIdReponseFor = extractReceiverId(invitationResponse);
     let userId = extractSenderId(invitationResponse);
     let invitationIsForMe = (myUserId == userIdReponseFor);
@@ -43,14 +73,15 @@ function processResponse(myUserId, invitationResponse) {
         let answer = extractAnswer(invitationResponse);
         if (answer == "Accepted") {
             alert("User accepted your invitation!");
-
             userEnterExam(userId);
 
-            // dequeue (remove from database, reload the queue view and 
-            //  set the current user to be the removed one)
+            if (meetType == 'Online')  {
+                openUrlInNewTab(meetAddress);
+            }
+
             console.log("Student has accepted");
         } else {
-            console.log("Student has dismissed the invitation");
+            alert("Student has dismissed the invitation");
         }
 
         // TODO set available the welcome button
@@ -64,8 +95,6 @@ function openUrlInNewTab(url) {
 
 
 function userEnterExam(userId) {
-    // updateViewOnUserEntering();
-
     var roomId = urlParams.get('roomId')
 
     var data = {
@@ -83,35 +112,8 @@ function userEnterExam(userId) {
     };
     
     fetch(url, settings)
-        .then(response => response.text())
+        // .then(response => response.text())
         .catch(error => console.log(error));
-
-    // openUrlInNewTab(url);  if meet is online
-
-}
-
-// Not working
-function updateViewOnUserEntering() {
-    var currentStudent = document.getElementsByClassName("queue-element")[0];
-
-    // remove meet_record with this student and room (URL) from database
-    // Refresh the page or somehow call (I think its automatically invoked) the method that render the view (now with the removed meet record) ?
-    
-    var currentStudentImage = currentStudent.childNodes[0].src;
-    var currentStudentName = currentStudent.childNodes[1].innerText;
-
-    document.getElementById("current-student-name").display = "block";
-    document.getElementById("current-student-name").innerText = currentStudentName;
-
-    document.getElementById("current-student-image").display = "block";
-    document.getElementById("current-student-image").src = currentStudentImage;
-    // console.log(document.getElementsByClassName("queue-element").length);
-
-    var queue = document.getElementById("queue");
-
-    // console.log("Proba2");
-
-    // queue.removeChild(elemToRemove);
 }
 
 function extractAnswer(invitationResponse) {
@@ -125,7 +127,13 @@ function extractReceiverId(invitationMessage) {
     return receiverId;
 }
 
-function sendInvitation(){
+function extractSenderId(invitationMessage) {
+    let senderId = invitationMessage.split(" ")[0].
+                                        split(":")[1];
+    return senderId;
+}
+
+function sendInvitation() {
 
     var url = 'src/api.php/get-room-details';
     var room = {
@@ -145,8 +153,3 @@ function sendInvitation(){
         .catch(error => console.log(error));
 }
 
-function extractSenderId(invitationMessage) {
-    let senderId = invitationMessage.split(" ")[0].
-                                        split(":")[1];
-    return senderId;
-}

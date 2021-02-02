@@ -1,15 +1,35 @@
 var socket = new WebSocket('ws://localhost:8080');
 var myId;
 var senderId;
+var invitationMessage;
 
 document.getElementById("accept-invitation-btn").addEventListener("click", acceptInvitation);
 function acceptInvitation() {
     // myId, senderId are initliazied in processInvitation
+    console.log(invitationMessage);
+    var meetInfo = extractMeetInfo(invitationMessage);
+    var meetType = meetInfo.split(" ")[0];
+    var meetAddress = meetInfo.split(" ")[1];
+
     socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Accepted");
     document.getElementById("invitation-pop-up").style.display = "none";
+
+    if (meetType == "Online") {
+        console.log(meetAddress);
+        openUrlInNewTab(meetAddress);
+    }
 }
 
-function openInvitation() {
+// invite_student.js has also this method
+function openUrlInNewTab(url) {
+    var win = window.open(url, '_blank');
+    win.focus();
+}
+
+function openInvitation(meetInfo) {
+    let meetAddress = meetInfo.split(" ")[1];
+
+    document.getElementById("invitation-meet-info").innerHTML = meetAddress;
     document.getElementById("invitation-pop-up").style.display = "inline-block";
 }
 
@@ -21,8 +41,7 @@ function closeInvitation() {
 }
 
 socket.onmessage = function(e) {
-    // if not invitationForMe(e.data) then return
-    let invitationMessage = e.data;
+    invitationMessage = e.data;
 
     var url = 'src/api.php/get-userId';
     var settings = {method: 'POST'};
@@ -40,7 +59,8 @@ function processInvitation(userId, invitationMessage) {
     if (invitationIsForMe) {
         senderId = extractSenderId(invitationMessage);
         myId = userId;
-        openInvitation();
+        let meetInfo = extractMeetInfo(invitationMessage);
+        openInvitation(meetInfo);
         oneMinuteInvitationAvailable();
     }
 }
@@ -58,11 +78,16 @@ function updateClock(seconds, intervalId) {
     if (seconds == 0) {
         if (! invitationIsAlreadyClosed()) {
             closeInvitation();
-        }        
+        }
 
         window.clearInterval(intervalId); // To stop calling updateClock()
     } else {
-        let time = "00:" + seconds;
+        let time;
+        if (seconds < 10) {
+            time = "00:0" + seconds;
+        } else {
+            time = "00:" + seconds;
+        }
         document.getElementById("invitation-timer").innerText = time;
     }
 }
@@ -81,4 +106,11 @@ function extractSenderId(invitationMessage) {
     let senderId = invitationMessage.split(" ")[0].
                                         split(":")[1];
     return senderId;
+}
+
+function extractMeetInfo(invitationMessage) {
+    let meetType = invitationMessage.split(" ")[2];
+    let meetAddress = invitationMessage.split(" ")[3];
+    let meetInfo = meetType + " " + meetAddress;
+    return meetInfo;
 }

@@ -119,6 +119,12 @@
             var meet_address_type = document.getElementById("meet_address_type").value;
             var meet_address = document.getElementById("address").value;;
 
+            if (meet_address_type == "Онлайн") {
+                meet_address_type = 0;
+            } else {
+                meet_address_type = 1;
+            }
+
             const meet = {
                 meet_title,
                 subject,
