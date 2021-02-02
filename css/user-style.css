@@ -248,3 +248,7 @@ p {
     background-color: rgba(230, 230, 230, 230);
     font-size: 5.2vw;   /* TODO how to increase relative to the current font size, em ? */
 }
+
+.center {
+    text-align: center;
+}

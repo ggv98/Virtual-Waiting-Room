@@ -29,7 +29,14 @@ function openUrlInNewTab(url) {
 function openInvitation(meetInfo) {
     let meetAddress = meetInfo.split(" ")[1];
 
-    document.getElementById("invitation-meet-info").innerHTML = meetAddress;
+    meetType = meetInfo.split(" ")[0];
+    meetAddress = meetInfo.split(" ")[1];
+
+    if (meetType == "Онлайн") {
+        document.getElementById("invitation-meet-info").innerHTML = "Онлайн";
+    } else {
+        document.getElementById("invitation-meet-info").innerHTML = "Място: " + meetAddress;
+    }
     document.getElementById("invitation-pop-up").style.display = "inline-block";
 }
 

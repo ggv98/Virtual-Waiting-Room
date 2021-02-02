@@ -62,7 +62,7 @@ function loadWaitingTimeLeft(room) {
     } else {
         var meetTime = new Date(room['startTime']);
         var currentTime = new Date ();
-        var leftTime = convertSecondsToHourandMinutes(meetTime - currentTime);
+        var leftTime = convertMilliSecondsToHourandMinutes(meetTime - currentTime);
         document.getElementById('timer').innerHTML= leftTime;
     }
 }
@@ -106,7 +106,7 @@ function removeClockFromDisplay() {
     document.getElementById("timer-circle").style.display = "None";
 }
 
-function convertSecondsToHourandMinutes(miliseconds){
+function convertMilliSecondsToHourandMinutes(miliseconds){
     var seconds = parseInt(miliseconds/1000, 10); 
     var sign = '';
     if (seconds<0){

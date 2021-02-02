@@ -65,7 +65,9 @@
     elseif(preg_match("/get-room-by-id$/", $requestURL)) {
         get_room_by_id();
     }
-    else {
+    elseif(preg_match("/update-queue-start-times$/", $requestURL)) {
+        add_delay();
+    }else {
         echo json_encode(["error" => "URL not found"]);
     }
 
@@ -491,9 +493,12 @@
             $roomId = $data['roomId'];
             $delay = $data['delay'];
 
+            // $delay = intval($delay);
+            // $roomId = intval($roomId);
+
             $query = $db->addDelayInQueueQuery(["id" => $roomId, "delay" => $delay]);
             if ($query["success"]) {
-                $response = ["success" => true];
+                $response = ["success" => true, "data" => [$delay, $roomId]];
             } else {
                 $response = $query;
             }
