@@ -50,6 +50,7 @@ function loadRoomDetails(room){
     document.getElementById('room_subject').innerHTML= "Предмет: " + subject;
     document.getElementById('message').innerHTML= message;
 }
+
 function loadWaitingTimeLeft($user){
     var meetTime = new Date($user['meetTime'])
     var currentTime = new Date ()
@@ -76,7 +77,6 @@ function convertMilliSecondsToHourandMinutes(miliseconds){
     seconds  -= mnts*60;
     return(sign + hrs+":" + mnts.toString().padStart(2, "0"));
 }
-
 
 function loadQueue(queue){
     clearQueue();

@@ -1,6 +1,6 @@
         
         updateView();
-        document.getElementById("submitBtn").addEventListener("click", createMeet);
+        // document.getElementById("submitBtn").addEventListener("click", createMeet);
 
 
         function openForm(room) {
@@ -106,7 +106,9 @@
 
         // adding room based on the form information
         // used on Submit-ing the form
-        function createMeet() {
+        function createMeet(event) {
+            event.preventDefault();
+
             var rooms_container = document.getElementById("rooms-container");
             rooms_container.innerHTML = "";
 
@@ -148,7 +150,8 @@
 
             var url = 'src/api.php/create-meet';
 
-            fetch(url, settings);
+            fetch(url, settings)
+                // .then(updateView());
 
             closeForm();
             updateView();

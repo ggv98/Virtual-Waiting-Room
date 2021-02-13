@@ -73,7 +73,7 @@ function processInvitation(userId, invitationMessage) {
 }
 
 function oneMinuteInvitationAvailable() {
-    let seconds = 10;
+    let seconds = 30;
     var intervalId = setInterval(function() {
         seconds = seconds - 1;
         updateClock(seconds, intervalId);
