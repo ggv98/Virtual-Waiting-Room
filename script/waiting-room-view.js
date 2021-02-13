@@ -48,11 +48,11 @@ function loadRoomDetails(room){
     var subject = room['subject'];
     var message = room['message'];
     if (!message){
-        message = "Няма съобщение за показване";
+        message = "";
     }
     document.getElementById('room_name').innerHTML= "Стая: " + roomName;
     document.getElementById('room_subject').innerHTML= "Предмет: " + subject;
-    document.getElementById('message').innerHTML= message;
+    document.getElementById('message-box').innerHTML= message;
 }
 
 function loadWaitingTimeLeft(room) {
@@ -173,4 +173,40 @@ function createElement(elem, index){
     queueElem.appendChild(number);
 
     document.getElementById("queue").appendChild(queueElem);
+}
+
+
+//Messages submit
+const submitMsgBtn = document.getElementById('message-submit');
+submitMsgBtn.addEventListener('click', uploadMessage);
+
+function uploadMessage(event){
+    event.preventDefault();
+    message = document.getElementById("message-box").value;
+    pauseInMinutes = document.getElementById("pause-field").value % 60;
+
+
+    pauseString = "00:" + pauseInMinutes.toString().padStart(2, "0") + ":00";
+
+    var url = 'src/api.php/update-message';
+    var message = {
+        roomId,
+        message,
+        pauseString
+    }
+
+    var settings = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `data=${JSON.stringify(message)}`
+    };
+
+    fetch(url, settings)
+        .then(alert(`Обявлението е направено успешно!`))
+        .catch(error => console.log(error));
+        document.getElementById("pause-field").value = "";
+
+
 }

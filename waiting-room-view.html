@@ -3,6 +3,8 @@
 <html lang="bg">
     <head>
         <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+
         <title>User home page</title>
 
         <link rel="stylesheet" href="css/user-style.css">
@@ -61,9 +63,13 @@
 
                 <section id='room-message'>
                     <p class="section-title">Съобщение</p>
-                    <div id=message-box>
-                        <p id=message>Тук стой съобщението от преподавателя</p>
-                    </div>
+                    <form>
+                        <textarea rows=10, cols=50, placeholder="Въведете съобщение тук ..." id=message-box></textarea>
+                        <label for="pause-field" id="pause-label">Почивка:</label>
+                        <input type="number", name="pause", id=pause-field>
+                        <button type="submit" id="message-submit" class="next" >Обяви</button>  <!--put back name="login" -->
+
+                    </form>
                 </section>
             </main>
             

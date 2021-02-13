@@ -67,7 +67,11 @@
     }
     elseif(preg_match("/update-queue-start-times$/", $requestURL)) {
         add_delay();
-    }else {
+    }
+    elseif(preg_match("/update-message$/", $requestURL)) {
+        update_room_message();
+    }
+    else {
         echo json_encode(["error" => "URL not found"]);
     }
 
@@ -577,6 +581,33 @@
             }
         }
         echo json_encode($response);
+    }
+
+    function update_room_message(){
+        $db = new Database();
+
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            $roomId = $data["roomId"];
+            $message = $data["message"];
+            $pauseString = $data["pauseString"];
+
+            $query = $db->addDelayInQueueQuery(["id" => $roomId, "delay" => $pauseString]);
+            if ($query["success"]) {
+                $response = ["success" => true, "data" => [$delay, $roomId]];
+            } else {
+                $response = $query;
+            }
+            $query = $db->updateWaitingRoomMsgQuery(["id" => $roomId, "message" => $message]);
+            if ($query["success"]) {
+                $response = ["success" => true, "data" => [$delay, $roomId]];
+            } else {
+                $response = $query;
+            }
+
+        }
+        echo json_encode($response);
+
     }
 
 ?>
