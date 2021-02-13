@@ -59,6 +59,7 @@ socket.onmessage = function(e) {
         .catch(error => console.log(error));
 }
 
+// if invitations is for me => opens it
 function processInvitation(userId, invitationMessage) {
     let receiverId = extractReceiverId(invitationMessage);
     let invitationIsForMe = (receiverId == userId);

@@ -73,7 +73,7 @@ function processResponseOnInvitation(myUserId, invitationResponse) {
         let answer = extractAnswer(invitationResponse);
         if (answer == "Accepted") {
             alert("User accepted your invitation!");
-            userEnterExam(userId);
+            deleteUser(userId);
 
             if (meetType == 'Online')  {
                 openUrlInNewTab(meetAddress);
@@ -81,9 +81,9 @@ function processResponseOnInvitation(myUserId, invitationResponse) {
 
             console.log("Student has accepted");
         } else {
+            deleteUser(userId);
             alert("Student has dismissed the invitation");
         }
-
         // TODO set available the welcome button
     }
 }
@@ -94,7 +94,7 @@ function openUrlInNewTab(url) {
 }
 
 
-function userEnterExam(userId) {
+function deleteUser(userId) {
     var roomId = urlParams.get('roomId')
 
     var data = {
