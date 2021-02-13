@@ -9,9 +9,11 @@
         <link rel="stylesheet" href="css/popup-form-style.css">
 
         <script defer src='script/check_session.js'></script>
+        <script defer src='script/remove_expired_rooms.js'></script>
         <script defer src='script/update_username.js'></script>
         <script defer src='script/student_forms_activity.js'></script>
         <script defer src="script/student_home_page.js"></script>
+        <script defer src='script/accept_invite.js'></script>
 
     </head>
 
@@ -47,6 +49,20 @@
                 <button type="submit" class="btn" id="submit-record">Запис</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Затвори</button>
             </form>
+
+            <div id="invitation-pop-up" class="form-popup">
+                <h1>Покана от преподавател</h1>
+
+                <div id='invitation-timer-circle'>
+                    <p id='invitation-timer-title'>Оставащо време:</p>
+                    <p id='invitation-timer'>00:00</p>
+                </div>
+
+                <p id="invitation-meet-info" class="center"> </p>
+
+                <button id="accept-invitation-btn" type="submit" class="btn">Приеми</button>
+                <button id="dismiss-invitation-btn" type="button" class="btn cancel">Откажи</button>
+            </div>
 
         </section>
 

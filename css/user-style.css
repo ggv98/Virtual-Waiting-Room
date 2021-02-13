@@ -74,6 +74,7 @@ p {
     width: 90%;
     min-height: 350px;
 }
+
 .room-information{
     display: flex;
     flex-direction: row;
@@ -82,22 +83,24 @@ p {
     background-color: #4daf7c;
     min-height:480px;
 }
+
 #room_name, #room_subject {
     margin: 3px;
 }
 
-#timer-section{
+#timer-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; 
     width: 35%;
     height: 450px;
 }
 
-#timer-circle{
+#timer-circle, #invitation-timer-circle {
     display: flex;
     flex-direction: column;
-    
+    margin: auto;
     justify-content: center;
     align-items: center; 
     background: lightblue;
@@ -112,7 +115,8 @@ p {
 
 }
 
-#timer{
+/* TODO maybe use class */
+#timer, #invitation-timer {
     font-size: 70px;
     font-weight: bolder;
     margin: 0;
@@ -120,7 +124,9 @@ p {
     color: #11251b;
 
 }
-#timer-title{
+
+/* TODO maybe use class */
+#timer-title, #invitation-timer-title {
     font-weight: 600;
     color: #11251b;
     margin: 0;
@@ -241,4 +247,8 @@ p {
 .add-room-button:hover {
     background-color: rgba(230, 230, 230, 230);
     font-size: 5.2vw;   /* TODO how to increase relative to the current font size, em ? */
+}
+
+.center {
+    text-align: center;
 }

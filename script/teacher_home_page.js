@@ -5,8 +5,6 @@
 
         function openForm(room) {
             document.getElementById("create-exam-form").style.display = "inline-block";
-
-            // TODO set the submit button of the form to update the next exam (in the up right corner)
         }
 
         function closeForm() {
@@ -26,7 +24,7 @@
         function updateView() {
             var url = 'src/api.php/get-teacher-waiting-rooms';
             var settings = {method: 'POST'};
-
+ 
             document.getElementById("rooms-container").innerHTML = "";  // remove all children
 
             var res = fetch(url, settings)
@@ -56,7 +54,7 @@
             date = new Date(room["endTime"]);
             var endHour = date.getHours() + ":" + date.getMinutes();
             
-            var timeInterval = startHour + " - " + endHour;
+            var timeInterval = date.toDateString() + " " + startHour + " - " + endHour;
             
             return timeInterval;
         }
@@ -86,12 +84,24 @@
             node2.classList.add("room-info");
             node2.innerText = timeInterval;
 
-            var room = document.createElement("div");
-            room.classList.add("room");
-            room.appendChild(node1);
-            room.appendChild(node2);
+            var roomDisplayElement = document.createElement("div");
+            roomDisplayElement.classList.add("room");
+            roomDisplayElement.appendChild(node1);
+            roomDisplayElement.appendChild(node2);
 
-            document.getElementById("rooms-container").appendChild(room);
+            var roomId = room["id"];
+
+            roomDisplayElement.addEventListener("click", function f() 
+                    {
+                        return redirectToWaitingRoom(roomId);
+                    }
+                );
+
+            document.getElementById("rooms-container").appendChild(roomDisplayElement);
+        }
+
+        function redirectToWaitingRoom(roomId) {
+            window.location = "waiting-room-view.html?roomId=" + roomId;
         }
 
         // adding room based on the form information
@@ -108,6 +118,12 @@
             var end_hour = document.getElementById("end-hour").value;
             var meet_address_type = document.getElementById("meet_address_type").value;
             var meet_address = document.getElementById("address").value;;
+
+            if (meet_address_type == "Онлайн") {
+                meet_address_type = 0;
+            } else {
+                meet_address_type = 1;
+            }
 
             const meet = {
                 meet_title,

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="bg">
+    <head>
+        <meta charset="utf-8">
+        <title>User home page</title>
+
+        <link rel="stylesheet" href="css/user-style.css">
+        <link rel="stylesheet" href="css/waiting-room-style.css">
+
+        <script defer src='script/check_session.js'></script>
+        <script defer src='script/update_username.js'></script>
+        <script defer src='script/waiting-room-view.js'></script>
+        <script defer src='script/invite_student.js'></script>
+
+    </head>
+
+    <body>
+
+        <header class="header">
+            <section class="welcome-message"> 
+                Добре дошъл, <br>
+                <span id="user-name" class="name" class="user-info-text">user looser</span> 
+                <span id='logout'>Изход</span>
+            </section>
+    
+            <img id="su-logo" src="img/sofia-uni-logo.jpg">
+              
+        </header>
+
+        <section class="main-content">
+            <h3 id='room_name'>Стая: Изпит</h3>
+            <h3 id='room_subject'>Предмет: Неизвестен</h3>
+
+            <main id="room-information" class="room-information">
+
+                <section id='waiting-room-current-state'>
+
+                    <!-- <div id="current-student" class="queue-element">
+                        <img id='current-student-image' class='user-image' src='storage/Screenshot (12).png'>
+                        <p id='current-student-name' class='current-student-info name'> Име на студент </p>
+                    </div> -->
+
+                    <button id='welcome-student-button'> Покани студент </button>
+
+                    <div id='timer-circle'>
+                        <p id='timer-title'> Оставащо време: </p>
+                        <p id='timer'>00:00</p>
+                    </div>
+                </section>
+
+                <section id='queue'>
+                    <p class='section-title'>Опашка от чакащи</p>
+                    <!-- Queue element -->
+                    <div class='queue-element'>
+                        <img class='user-image' src='storage/Screenshot (12).png'>
+                        <p class='name'>Иван Иванов</p>
+                        <p class='number'>1</p>
+                    </div>
+                </section>
+
+                <section id='room-message'>
+                    <p class="section-title">Съобщение</p>
+                    <div id=message-box>
+                        <p id=message>Тук стой съобщението от преподавателя</p>
+                    </div>
+                </section>
+            </main>
+            
+        </section>
+
+    </body>
+
+</html>

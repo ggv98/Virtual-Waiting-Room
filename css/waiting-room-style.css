@@ -1,0 +1,33 @@
+#waiting-room-current-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    width: 35%;
+    height: 450px;
+}
+
+/* .current-student-info {
+    display: None;
+} */
+
+#welcome-student-button {
+    display: None;
+    font-size: 1.5rem;
+    justify-content: center;
+    align-items: center; 
+    background: lightblue;
+    border-radius: 50%;
+    border: 24px solid #24533b;
+    -moz-box-shadow: 1px 0px 21px #000000;
+    -webkit-box-shadow: 1px 0px 21px #000000;
+    box-shadow: 1px 0px 21px #000000;
+
+    width: 180px;
+    height: 180px;
+}
+
+#welcome-student-button:hover {
+    background: #8aa6c5;
+    cursor: pointer;
+}

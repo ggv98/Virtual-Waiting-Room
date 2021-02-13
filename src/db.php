@@ -37,6 +37,8 @@
             $sql = "SELECT * FROM users WHERE id=:id";
             $this->selectUserByIdStatement = $this->connection->prepare($sql);
             
+
+            
             // students_info Statements
             $sql = "SELECT * FROM students_info WHERE userID =:userId";
             $this->selectUserProfileInfo = $this->connection->prepare($sql);
@@ -47,6 +49,9 @@
 
             $sql = "UPDATE students_info SET Image=:image WHERE userID=:userId";
             $this->updateUserImageStatement = $this->connection->prepare($sql);
+
+
+
 
             // waiting_room Statements
             $sql = "INSERT INTO waiting_room(teacherID,	title, subject,	avgDuration, message, startTime, endTime, meetType,	address)
@@ -65,15 +70,27 @@
             $sql = "SELECT * FROM waiting_room WHERE id=:id";
             $this->selectWaitingRoomByIdStatement = $this->connection->prepare($sql);
 
+            $sql = "DELETE FROM waiting_room WHERE endTime < CURDATE()";
+            $this->deleteExpiredWaitingRoomStatement = $this->connection->prepare($sql);
+
+
+
+
             //meet-record Statement
             $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=:roomId";
             $this->getLastStudentOnQueueStatement = $this->connection->prepare($sql);
+
+            $sql = "DELETE FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
+            $this->deleteMeetRecordStatement = $this->connection->prepare($sql);
 
             $sql = "INSERT INTO meet_record(roomID, studentID, meetTime, reason) VALUES (:roomId, :studentId, :meetTime, :reason)";
             $this->insertMeetRecordStatement = $this->connection->prepare($sql);
 
             $sql = "SELECT * FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
             $this->selectMeetRecordByroomIdandStudentIdStatement = $this->connection->prepare($sql);
+
+            $sql = "SELECT students_info.firstName, students_info.lastName FROM meet_record JOIN students_info ON meet_record.studentID=students_info.userID WHERE roomID=:roomId";
+            $this->selectStudentsGivenRoomIdStatement = $this->connection->prepare($sql);
 
             $sql = "SELECT * FROM meet_record JOIN students_info on studentID=userID 
                                 WHERE roomID=:roomId 
@@ -82,7 +99,6 @@
 
             $sql = "UPDATE meet_record SET meetTime = ADDTIME(meetTime, :delay) WHERE roomID = :id";
             $this->addDelayInQueueStatement = $this->connection->prepare($sql);
-
         }
         // USERS QUERY
         public function insertUserQuery($data) {
@@ -120,7 +136,7 @@
             }
         }
 
-// User INFO QUERY
+        // User INFO QUERY
 
         public function insertUserInfoQuery($data) {
             try {
@@ -156,8 +172,7 @@
         }
 
 
-// WAITING ROOMS QUERY
-
+    // WAITING ROOMS QUERY
     public function createWaitingRoomQuery($data) {
         try {
             // ["teacherID" => "...", "title => "...", :subject => ",,,"..........]
@@ -203,6 +218,7 @@
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
     public function selectWaitingRoomByIdQuery($data) {
         try {
             // ["id" => "..."]
@@ -213,6 +229,18 @@
             return ["success" => false, "error" => $e->getMessage()];
         }
     }
+
+    public function deleteExpiredWaitingRoomsQuery() {
+        try {
+            // ["id" => "..."]
+            $this->deleteExpiredWaitingRoomStatement->execute();
+
+            return ["success" => true, "data" => $this->deleteExpiredWaitingRoomStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" => $e->getMessage()];
+        }
+    }
+
     public function getLastStudentOnQueueQuery($data) {
         try {
             // ["id" => "..."]
@@ -267,7 +295,29 @@
             return ["success" => false, "error" =>  $e->getMessage()];
         }
     }
-    
+
+    public function getMeetRecordByRoomIdQuery($data) {
+        try {
+            // ["roomId" => "...", "studentId" => "..."]
+            $this->selectStudentsGivenRoomIdStatement->execute($data);
+
+            return ["success" => true, "data" => $this->selectStudentsGivenRoomIdStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" =>  $e->getMessage()];
+        }
+    }
+
+    public function deleteMeetRecordQuery($data) {
+        try {
+            // ["roomId" => "...", "studentId" => "..."]
+            $this->deleteMeetRecordStatement->execute($data);
+
+            return ["success" => true, "data" => $this->deleteMeetRecordStatement];
+        } catch(PDOException $e) {
+            return ["success" => false, "error" =>  $e->getMessage()];
+        }
+    }
+
 }
 
 ?>

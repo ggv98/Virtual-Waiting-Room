@@ -53,12 +53,12 @@ function loadRoomDetails(room){
 function loadWaitingTimeLeft($user){
     var meetTime = new Date($user['meetTime'])
     var currentTime = new Date ()
-    var leftTime =convertSecondsToHourandMinutes((meetTime - currentTime));
+    var leftTime = convertMilliSecondsToHourandMinutes((meetTime - currentTime));
     document.getElementById('timer').innerHTML= leftTime;
 
 }
 
-function convertSecondsToHourandMinutes(miliseconds){
+function convertMilliSecondsToHourandMinutes(miliseconds){
     var seconds = parseInt(miliseconds/1000, 10); 
     var sign = '';
     if (seconds<0){

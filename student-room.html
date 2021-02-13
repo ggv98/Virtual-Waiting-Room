@@ -6,10 +6,13 @@
         <title>User home page</title>
 
         <link rel="stylesheet" href="css/user-style.css">
+        <link rel="stylesheet" href="css/popup-form-style.css">
 
         <script defer src='script/check_session.js'></script>
         <script defer src='script/update_username.js'></script>
         <script defer src='script/student_room.js'></script>
+        <script defer src='script/accept_invite.js'></script>
+        <script defer src='script/update_students_start_time.js'></script>
 
     </head>
 
@@ -53,6 +56,20 @@
                     </div>
                 </section>
             </main>
+
+            <div id="invitation-pop-up" class="form-popup">
+                <h1>Покана от преподавател</h1>
+
+                <div id='invitation-timer-circle'>
+                    <p id='invitation-timer-title'>Оставащо време:</p>
+                    <p id='invitation-timer'>00:00</p>
+                </div>
+
+                <p id="invitation-meet-info" class="center"> </p>
+
+                <button id="accept-invitation-btn" type="submit" class="btn">Приеми</button>
+                <button id="dismiss-invitation-btn" type="button" class="btn cancel">Откажи</button>
+            </div>
             
         </section>
 

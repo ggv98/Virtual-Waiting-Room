@@ -38,19 +38,36 @@
     elseif(preg_match("/create-meet$/", $requestURL)) {
         create_meet();
     }
-    elseif(preg_match("/meet-record$/", $requestURL)) {
-        create_meet_record();
-    }
+    // elseif(preg_match("/meet-record$/", $requestURL)) {
+    //     create_meet_record();
+    // }
     elseif(preg_match("/get-teacher-waiting-rooms$/", $requestURL)) {
         get_waiting_rooms_given_teacher_id();
     }
     elseif(preg_match("/get-all-waiting-rooms$/", $requestURL)) {
         get_all_waiting_rooms();
     }
+    elseif(preg_match("/get-students-by-waiting-room$/", $requestURL)) {
+        get_students_by_waiting_room();
+    }
     elseif(preg_match("/get-room-details$/", $requestURL)) {
         get_room_details();
     }
-     else {
+    elseif(preg_match("/delete-expired-waiting-rooms$/", $requestURL)) {
+        delete_expired_waiting_rooms();
+    }
+    elseif(preg_match("/get-userId$/", $requestURL)) {
+        get_userId();
+    }
+    elseif(preg_match("/delete-meet-record$/", $requestURL)) {
+        delete_meet_record();        
+    }
+    elseif(preg_match("/get-room-by-id$/", $requestURL)) {
+        get_room_by_id();
+    }
+    elseif(preg_match("/update-queue-start-times$/", $requestURL)) {
+        add_delay();
+    }else {
         echo json_encode(["error" => "URL not found"]);
     }
 
@@ -224,9 +241,26 @@
             } else {
                 $username = "No user";
             }
-            $response = ["success" => $username, "data" => $username];
+            $response = ["success" => true, "data" => $username];
         } else {
-            $response = ["success" => false, "data" => "Helo world error"];
+            $response = ["success" => false, "data" => "No existing session"];
+        }
+
+        echo json_encode($response);
+    }
+
+    function get_userId() {
+        $userId;
+
+        if ($_SESSION) {
+            if ($_SESSION["username"]) {
+                $userId = $_SESSION["userId"];
+            } else {
+                $userId = "No user";
+            }
+            $response = ["success" => true, "data" => $userId];
+        } else {
+            $response = ["success" => false, "data" => "No existing session"];
         }
 
         echo json_encode($response);
@@ -308,6 +342,7 @@
         echo json_encode($response);
     }
 
+    // getting waiting rooms for current session's teacher
     function get_waiting_rooms_given_teacher_id() {
         if($_SESSION && $_SESSION["userId"]){
                 $teacherId = $_SESSION["userId"];
@@ -361,6 +396,52 @@
         echo json_encode($response);
     }
 
+    function get_students_by_waiting_room() {
+        $errors = [];
+        $response = [];
+        $db = new Database();
+
+        $students = [];
+
+        if ($_SESSION) {
+            if ($_POST) {
+                $data = json_decode($_POST["data"], true);
+                $roomId = testInput($data["roomId"]);
+
+                $room = new waiting_room();
+                $room->load($roomId);
+                $roomCreaterId = $room->getTeacherId();
+                $querierHasAccess = ($roomCreaterId == $_SESSION["userId"]);
+
+                if ($querierHasAccess) {
+
+                    $query = $db->getMeetRecordByRoomIdQuery(["roomId"=>$roomId]);
+                    if ($query['success']) {
+                        while ($data = $query["data"]->fetch(PDO::FETCH_ASSOC)) {
+                            array_push($students, $data);
+                        }
+                    } else {
+                        $errors[] = "Database Fail!";
+                    }
+                } else {
+                    $errors[] = "Invalid url!";
+                }
+
+            } else {
+                $errors[] = "Invalid request";
+            }
+        } else {
+            $errors[] = "Seems like session has expired";
+        }
+
+        if($errors) {
+            $response = ["success" => false, "error" => $errors];
+        } else {
+            $response = ["success" => true, "data" => $students];
+        }
+
+        echo json_encode($response);
+    }
 
     function get_room_details() {
         $errors = [];
@@ -412,9 +493,12 @@
             $roomId = $data['roomId'];
             $delay = $data['delay'];
 
+            // $delay = intval($delay);
+            // $roomId = intval($roomId);
+
             $query = $db->addDelayInQueueQuery(["id" => $roomId, "delay" => $delay]);
             if ($query["success"]) {
-                $response = ["success" => true];
+                $response = ["success" => true, "data" => [$delay, $roomId]];
             } else {
                 $response = $query;
             }
@@ -436,4 +520,63 @@
             echo json_encode(["success" => false]);
         }
     }
+
+    function delete_expired_waiting_rooms() {
+        $db = new Database();
+        $query = $db->deleteExpiredWaitingRoomsQuery();
+
+        if ($query['success']) {
+            $query["data"]->fetch(PDO::FETCH_ASSOC);
+            
+            $response = ['success' => true];
+        } else {
+            $response = ['success' => false, 'error' => "Database failed"];
+        }
+
+        echo json_encode($response);
+    }
+
+    function delete_meet_record() {
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            
+            $roomId = $data["roomId"];
+            $userId = $data["userId"];
+            
+            $db = new Database();
+            // get room id and studentId
+            $queryData = ["roomId" => $roomId,
+                        "studentId" => $userId];
+
+            $query = $db->deleteMeetRecordQuery($queryData);
+            if ($query['success']) {
+                $query["data"]->fetch(PDO::FETCH_ASSOC);
+            
+                $response = ['success' => true];
+            } else {
+                $response = ['success' => false, 'error' => "Database failed"];
+            }
+        }
+        echo json_encode($response);
+    }
+
+    function get_room_by_id() {
+        $db = new Database();
+
+        if ($_POST) {
+            $data = json_decode($_POST["data"], true);
+            $roomId = $data["roomId"];
+
+            $query = $db->selectWaitingRoomByIdQuery(["id" => $roomId]);
+            if ($query['success']) {
+                $data = $query["data"]->fetch(PDO::FETCH_ASSOC);
+            
+                $response = ['success' => true, "data" => $data];
+            } else {
+                $response = ['success' => false, 'error' => "Database failed"];
+            }
+        }
+        echo json_encode($response);
+    }
+
 ?>
