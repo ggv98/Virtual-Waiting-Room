@@ -156,7 +156,8 @@ p {
 
 
 #message-box{
-    width: 100%;
+    resize: none;
+    width: 97%;
     height: 80%;
     min-height: 100px;
     background-color: lightblue;
@@ -174,7 +175,7 @@ p {
     margin-top: 20px;
     background-color: lightblue;
     border-radius: 3%;
-    width: 50%;
+    width: 50px;
     padding: 3px;
     padding-left: 10px;
     font-size: medium;

@@ -28,8 +28,6 @@
             var url = 'src/api.php/get-teacher-waiting-rooms';
             var settings = {method: 'POST'};
  
-            document.getElementById("rooms-container").innerHTML = "";  // remove all children
-
             var res = fetch(url, settings)
                     .then(response => response.json())
                     .then(response => displayResponseToView(response["data"]))
@@ -40,6 +38,8 @@
 
         // TODO maybe isolate some functions that are common with student-home-page
         function displayResponseToView(rooms) {
+            document.getElementById("rooms-container").innerHTML = "";  // remove all children
+
             if (rooms){
                 for (room of rooms) {
                     displayRoom(room);
@@ -65,6 +65,7 @@
         function displayAddRoomButton() {
             var node = document.createElement("p");
             node.classList.add("room-info");
+            node.id = "add-button"
             node.innerText = "+";
 
             var roomButton = document.createElement("div");

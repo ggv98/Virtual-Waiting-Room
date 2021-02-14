@@ -11,3 +11,14 @@ input, select {
 .room-info {
     text-align: center;
 }
+
+#add-room-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add-button{
+    font-size: 50px;
+
+}
