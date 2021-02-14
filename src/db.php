@@ -70,7 +70,7 @@
             $sql = "SELECT * FROM waiting_room WHERE id=:id";
             $this->selectWaitingRoomByIdStatement = $this->connection->prepare($sql);
 
-            $sql = "DELETE FROM waiting_room WHERE endTime < CURDATE()";
+            $sql = "DELETE FROM waiting_room WHERE endTime < NOW()";
             $this->deleteExpiredWaitingRoomStatement = $this->connection->prepare($sql);
 
 
@@ -232,7 +232,6 @@
 
     public function deleteExpiredWaitingRoomsQuery() {
         try {
-            // ["id" => "..."]
             $this->deleteExpiredWaitingRoomStatement->execute();
 
             return ["success" => true, "data" => $this->deleteExpiredWaitingRoomStatement];
