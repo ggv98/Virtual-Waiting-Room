@@ -6,7 +6,6 @@ var meetAddress;
 document.getElementById("welcome-student-button").onclick = sendInvitation;
 
 function sendInvitationToStudent(studentID) {
-    // TODO start 1 min timer
     var url = 'src/api.php/get-userId';
     var settings = {method: 'POST'};
 
@@ -49,7 +48,15 @@ function sendInvitationGivenFullData(sender, receiver, room) {
         meetType = "FMI";
     }
     meetAddress = room["address"];
-    socket.send("Sender_id:" + sender + " Receiver_id:" + receiver + " " + meetType + " " + meetAddress);
+    
+    let invitationMsg = {sender_id: sender,
+                        receiver_id: receiver,
+                        meetType: meetType,
+                        meetAddress: meetAddress
+                    };
+    invitationMsg = JSON.stringify(invitationMsg);
+
+    socket.send(invitationMsg);
 }
 
 socket.onmessage = function(e) {
@@ -73,7 +80,7 @@ function processResponseOnInvitation(myUserId, invitationResponse) {
         let answer = extractAnswer(invitationResponse);
         if (answer == "Accepted") {
             alert("User accepted your invitation!");
-            userEnterExam(userId);
+            deleteUser(userId);
 
             if (meetType == 'Online')  {
                 openUrlInNewTab(meetAddress);
@@ -81,9 +88,9 @@ function processResponseOnInvitation(myUserId, invitationResponse) {
 
             console.log("Student has accepted");
         } else {
+            deleteUser(userId);
             alert("Student has dismissed the invitation");
         }
-
         // TODO set available the welcome button
     }
 }
@@ -94,7 +101,7 @@ function openUrlInNewTab(url) {
 }
 
 
-function userEnterExam(userId) {
+function deleteUser(userId) {
     var roomId = urlParams.get('roomId')
 
     var data = {
@@ -117,19 +124,23 @@ function userEnterExam(userId) {
 }
 
 function extractAnswer(invitationResponse) {
-    let answer = invitationResponse.split(" ")[2];
+    invitationResponse = JSON.parse(invitationResponse);
+    let answer = invitationResponse["answer"];
+
     return answer;
 }
 
-function extractReceiverId(invitationMessage) {
-    let receiverId = invitationMessage.split(" ")[1].
-                                        split(":")[1];
+function extractReceiverId(invitationResponse) {
+    invitationResponse = JSON.parse(invitationResponse);
+    let receiverId = invitationResponse["receiver_id"];
+
     return receiverId;
 }
 
-function extractSenderId(invitationMessage) {
-    let senderId = invitationMessage.split(" ")[0].
-                                        split(":")[1];
+function extractSenderId(invitationResponse) {
+    invitationResponse = JSON.parse(invitationResponse);
+    let senderId = invitationResponse["sender_id"];
+
     return senderId;
 }
 
