@@ -34,7 +34,13 @@ function updateQueue(firstInQueueStartTime) {
     var delay = getDelay(firstInQueueStartTime);
 
     if (delay > 0) {
-        delay = convertMilliSecondsToHourandMinutes2(delay + 5000);
+        updateQueueGivenDelay(delay);
+    }
+}
+
+// delay is in milliseconds
+function updateQueueGivenDelay(delay) {
+    delay = convertMilliSecondsToHourandMinutes2(delay + 5000);
 
         var roomId = urlParams.get('id');
 
@@ -59,7 +65,6 @@ function updateQueue(firstInQueueStartTime) {
             .then(response => response.json())
             .then(response => console.log(response))
             .catch(error => console.log(error));
-        }
 }
 
 function convertMilliSecondsToHourandMinutes2(miliseconds){
