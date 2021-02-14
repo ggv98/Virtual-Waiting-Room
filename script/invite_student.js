@@ -79,7 +79,7 @@ function processResponseOnInvitation(myUserId, invitationResponse) {
     if (invitationIsForMe) {
         let answer = extractAnswer(invitationResponse);
         if (answer == "Accepted") {
-            alert("User accepted your invitation!");
+            alert("Студентът прие вашата покана!");
             deleteUser(userId);
 
             if (meetType == 'Online')  {
@@ -89,7 +89,7 @@ function processResponseOnInvitation(myUserId, invitationResponse) {
             console.log("Student has accepted");
         } else {
             deleteUser(userId);
-            alert("Student has dismissed the invitation");
+            alert("Студентът не прие поканата");
         }
         // TODO set available the welcome button
     }
@@ -185,6 +185,7 @@ function updateStartTimesAndSendInvitation() {
         .then(response => response.json())
         .then(response => updateQueue(response['data']['queue'][0]['meetTime']))
         .then(sendInvitation())
+        .then(alert("Успешно изпратихте покана"))
         .catch(error => console.log(error));
 }
 
