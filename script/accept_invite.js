@@ -7,9 +7,8 @@ document.getElementById("accept-invitation-btn").addEventListener("click", accep
 function acceptInvitation() {
     // myId, senderId are initliazied in processInvitation
     console.log(invitationMessage);
-    var meetInfo = extractMeetInfo(invitationMessage);
-    var meetType = meetInfo.split(" ")[0];
-    var meetAddress = meetInfo.split(" ")[1];
+    var meetType = extractMeetType(invitationMessage);
+    var meetAddress = extractMeetAddress(invitationMessage);
 
     socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Accepted");
     document.getElementById("invitation-pop-up").style.display = "none";
@@ -26,12 +25,7 @@ function openUrlInNewTab(url) {
     win.focus();
 }
 
-function openInvitation(meetInfo) {
-    let meetAddress = meetInfo.split(" ")[1];
-
-    meetType = meetInfo.split(" ")[0];
-    meetAddress = meetInfo.split(" ")[1];
-
+function openInvitation(meetType, meetAddress) {
     if (meetType == "Онлайн") {
         document.getElementById("invitation-meet-info").innerHTML = "Онлайн";
     } else {
@@ -67,8 +61,9 @@ function processInvitation(userId, invitationMessage) {
     if (invitationIsForMe) {
         senderId = extractSenderId(invitationMessage);
         myId = userId;
-        let meetInfo = extractMeetInfo(invitationMessage);
-        openInvitation(meetInfo);
+        var meetType = extractMeetType(invitationMessage);
+        var meetAddress = extractMeetAddress(invitationMessage);
+        openInvitation(meetType, meetAddress);
         oneMinuteInvitationAvailable();
     }
 }
@@ -104,21 +99,31 @@ function invitationIsAlreadyClosed() {
     return document.getElementById("invitation-pop-up").style.display == "none";
 }
 
+
 function extractReceiverId(invitationMessage) {
-    let receiverId = invitationMessage.split(" ")[1].
-                                        split(":")[1];
+    invitationMessage = JSON.parse(invitationMessage);
+    let receiverId = invitationMessage["receiver_id"];
+
     return receiverId;
 }
 
 function extractSenderId(invitationMessage) {
-    let senderId = invitationMessage.split(" ")[0].
-                                        split(":")[1];
+    invitationMessage = JSON.parse(invitationMessage);
+    let senderId = invitationMessage["sender_id"];
+
     return senderId;
 }
 
-function extractMeetInfo(invitationMessage) {
-    let meetType = invitationMessage.split(" ")[2];
-    let meetAddress = invitationMessage.split(" ")[3];
-    let meetInfo = meetType + " " + meetAddress;
-    return meetInfo;
+function extractMeetType(invitationMessage) {
+    invitationMessage = JSON.parse(invitationMessage);
+    let meetType = invitationMessage["meetType"];
+
+    return meetType;
+}
+
+function extractMeetAddress(invitationMessage) {
+    invitationMessage = JSON.parse(invitationMessage);
+    let meetAddress = invitationMessage["meetAddress"];
+
+    return meetAddress;
 }

@@ -49,7 +49,15 @@ function sendInvitationGivenFullData(sender, receiver, room) {
         meetType = "FMI";
     }
     meetAddress = room["address"];
-    socket.send("Sender_id:" + sender + " Receiver_id:" + receiver + " " + meetType + " " + meetAddress);
+    
+    let invitationMsg = {sender_id: sender,
+                        receiver_id: receiver,
+                        meetType: meetType,
+                        meetAddress: meetAddress
+                    };
+    invitationMsg = JSON.stringify(invitationMsg);
+
+    socket.send(invitationMsg);
 }
 
 socket.onmessage = function(e) {
