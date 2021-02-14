@@ -37,7 +37,7 @@
                 <!--<div id="add-room-button" class="room" onclick="openForm(0)"> <p>+</p> </div> -->
             </div>
         </section>
-        <form onsubmit="return false;" id="create-exam-form"  class="form-popup">
+        <form onsubmit="return createMeet(event);" id="create-exam-form" method=POST class="form-popup">
             <h1>Създаване на стая</h1>
 
             <input id="meet-title" type="text" placeholder="Въведи заглавие на срещата" name="meet_title" required>

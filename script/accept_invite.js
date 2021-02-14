@@ -7,11 +7,11 @@ document.getElementById("accept-invitation-btn").addEventListener("click", accep
 function acceptInvitation() {
     // myId, senderId are initliazied in processInvitation
     console.log(invitationMessage);
-    var meetInfo = extractMeetInfo(invitationMessage);
-    var meetType = meetInfo.split(" ")[0];
-    var meetAddress = meetInfo.split(" ")[1];
+    var meetType = extractMeetType(invitationMessage);
+    var meetAddress = extractMeetAddress(invitationMessage);
 
-    socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Accepted");
+    sendResponseToInvitation(accepted=true);
+
     document.getElementById("invitation-pop-up").style.display = "none";
 
     if (meetType == "Online") {
@@ -26,12 +26,7 @@ function openUrlInNewTab(url) {
     win.focus();
 }
 
-function openInvitation(meetInfo) {
-    let meetAddress = meetInfo.split(" ")[1];
-
-    meetType = meetInfo.split(" ")[0];
-    meetAddress = meetInfo.split(" ")[1];
-
+function openInvitation(meetType, meetAddress) {
     if (meetType == "Онлайн") {
         document.getElementById("invitation-meet-info").innerHTML = "Онлайн";
     } else {
@@ -41,10 +36,28 @@ function openInvitation(meetInfo) {
 }
 
 document.getElementById("dismiss-invitation-btn").addEventListener("click", closeInvitation);
+
 function closeInvitation() {
     document.getElementById("invitation-pop-up").style.display = "none";
+    sendResponseToInvitation(accepted=false);
+}
 
-    socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Denied");
+function sendResponseToInvitation(accepted) {
+    let invitationResponse;
+
+    if (accepted) {
+        invitationResponse = "Accepted";
+    } else { 
+        invitationResponsec = "Denied";
+    }
+
+    let responseToInvitation = {sender_id: myId,
+        receiver_id: senderId, // senderId = invitationSender
+        answer: invitationResponse
+    };
+
+    responseToInvitation = JSON.stringify(responseToInvitation);
+    socket.send(responseToInvitation);
 }
 
 socket.onmessage = function(e) {
@@ -59,6 +72,7 @@ socket.onmessage = function(e) {
         .catch(error => console.log(error));
 }
 
+// if invitations is for me => opens it
 function processInvitation(userId, invitationMessage) {
     let receiverId = extractReceiverId(invitationMessage);
     let invitationIsForMe = (receiverId == userId);
@@ -66,14 +80,15 @@ function processInvitation(userId, invitationMessage) {
     if (invitationIsForMe) {
         senderId = extractSenderId(invitationMessage);
         myId = userId;
-        let meetInfo = extractMeetInfo(invitationMessage);
-        openInvitation(meetInfo);
+        var meetType = extractMeetType(invitationMessage);
+        var meetAddress = extractMeetAddress(invitationMessage);
+        openInvitation(meetType, meetAddress);
         oneMinuteInvitationAvailable();
     }
 }
 
 function oneMinuteInvitationAvailable() {
-    let seconds = 10;
+    let seconds = 30;
     var intervalId = setInterval(function() {
         seconds = seconds - 1;
         updateClock(seconds, intervalId);
@@ -103,21 +118,31 @@ function invitationIsAlreadyClosed() {
     return document.getElementById("invitation-pop-up").style.display == "none";
 }
 
+
 function extractReceiverId(invitationMessage) {
-    let receiverId = invitationMessage.split(" ")[1].
-                                        split(":")[1];
+    invitationMessage = JSON.parse(invitationMessage);
+    let receiverId = invitationMessage["receiver_id"];
+
     return receiverId;
 }
 
 function extractSenderId(invitationMessage) {
-    let senderId = invitationMessage.split(" ")[0].
-                                        split(":")[1];
+    invitationMessage = JSON.parse(invitationMessage);
+    let senderId = invitationMessage["sender_id"];
+
     return senderId;
 }
 
-function extractMeetInfo(invitationMessage) {
-    let meetType = invitationMessage.split(" ")[2];
-    let meetAddress = invitationMessage.split(" ")[3];
-    let meetInfo = meetType + " " + meetAddress;
-    return meetInfo;
+function extractMeetType(invitationMessage) {
+    invitationMessage = JSON.parse(invitationMessage);
+    let meetType = invitationMessage["meetType"];
+
+    return meetType;
+}
+
+function extractMeetAddress(invitationMessage) {
+    invitationMessage = JSON.parse(invitationMessage);
+    let meetAddress = invitationMessage["meetAddress"];
+
+    return meetAddress;
 }
