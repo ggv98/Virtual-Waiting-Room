@@ -43,7 +43,7 @@ p {
 }
 
 .main-content {
-    margin: 0rem 10rem ;
+    margin: 0rem 6rem ;
 
     min-width: 250px;
 }
@@ -58,7 +58,21 @@ p {
     /* text-decoration: none; */
     line-height: normal;
 }
-
+.fn, .reason, .speciality {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size:small;
+    font-weight: bold;
+    font-style: normal;
+    color: #000000;
+    margin:-1px;
+    margin-left: 5px;
+    /* text-decoration: none; */
+    line-height: normal;
+}
+.fn{
+    margin-top: -5px;
+    margin-left: 5px;
+}
 .header img {
     width: 400px;
     height: 100px;
@@ -312,7 +326,7 @@ p {
         height: 230px;
     }
 }
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 1050px) {
 
     .main-content {
         margin: 1rem 0rem;
@@ -322,8 +336,8 @@ p {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 85%;
-        margin: 20px;
+        width: 90%;
+        margin: 10px;
     }
 
     #queue, #room-message{

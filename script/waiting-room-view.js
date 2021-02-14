@@ -161,10 +161,8 @@ function createElement(elem, index){
     queueElem.appendChild(image);
 
     
-    var name = document.createElement("p");
-    name.classList.add("name");
-    name.innerText =  userName;
-    queueElem.appendChild(name);
+    var userInfoSection =  createUserInfoSection(elem)
+    queueElem.appendChild(userInfoSection);
 
 
     var number = document.createElement("p");
@@ -175,6 +173,74 @@ function createElement(elem, index){
     document.getElementById("queue").appendChild(queueElem);
 }
 
+function createUserInfoSection(elem){
+    var userInfoSection = document.createElement("div")
+    userInfoSection.classList.add("user-info-section")
+
+    var name = elem['firstName'] + ' ' + elem['lastName'];
+    var nameElem = document.createElement("p");
+    nameElem.classList.add("name");
+    nameElem.innerText =  name;
+
+    userInfoSection.appendChild(nameElem);
+
+    
+    var fn = "Фн: " + elem['facultyNumber'];
+    var fnElem = document.createElement("p");
+    fnElem.classList.add("fn");
+    fnElem.innerText =  fn;
+    
+    userInfoSection.appendChild(fnElem);
+
+    var reason = "Причина: " +  elem['reason'];
+    var reasonElem = document.createElement("p");
+    reasonElem.classList.add("reason");
+    reasonElem.innerText =  reason;
+    
+    userInfoSection.appendChild(reasonElem);
+
+
+    var speciality = getSpecialityName(elem["speciality"]);
+    var specialityElem = document.createElement("p");
+    specialityElem.classList.add("speciality");
+    specialityElem.innerText =  speciality;
+    
+    userInfoSection.appendChild(specialityElem);
+
+    return userInfoSection
+}
+
+function getSpecialityName(name){
+    switch (name) {
+        case 'CS':
+            return "Компютърни науки";
+            break;
+
+        case 'mat':
+            return "Математика";
+            break;
+
+        case 'inf':
+            return "Математика";
+            break;
+
+        case 'IT':
+            return "Информационни технологии";
+            break;
+            
+        case 'MatandInf':
+            return "Математика и информатика";
+            break;
+                        
+        case 'Stat':
+            return "Статистика";
+            break;
+        
+        default:
+            return "";
+      
+      }
+}
 
 //Messages submit
 const submitMsgBtn = document.getElementById('message-submit');
