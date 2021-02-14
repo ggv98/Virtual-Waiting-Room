@@ -10,7 +10,8 @@ function acceptInvitation() {
     var meetType = extractMeetType(invitationMessage);
     var meetAddress = extractMeetAddress(invitationMessage);
 
-    socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Accepted");
+    sendResponseToInvitation(accepted=true);
+
     document.getElementById("invitation-pop-up").style.display = "none";
 
     if (meetType == "Online") {
@@ -35,10 +36,28 @@ function openInvitation(meetType, meetAddress) {
 }
 
 document.getElementById("dismiss-invitation-btn").addEventListener("click", closeInvitation);
+
 function closeInvitation() {
     document.getElementById("invitation-pop-up").style.display = "none";
+    sendResponseToInvitation(accepted=false);
+}
 
-    socket.send("SenderId:" + myId + " " + "ReceiverId:" + senderId + " Denied");
+function sendResponseToInvitation(accepted) {
+    let invitationResponse;
+
+    if (accepted) {
+        invitationResponse = "Accepted";
+    } else { 
+        invitationResponsec = "Denied";
+    }
+
+    let responseToInvitation = {sender_id: myId,
+        receiver_id: senderId, // senderId = invitationSender
+        answer: invitationResponse
+    };
+
+    responseToInvitation = JSON.stringify(responseToInvitation);
+    socket.send(responseToInvitation);
 }
 
 socket.onmessage = function(e) {

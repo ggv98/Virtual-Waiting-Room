@@ -6,7 +6,6 @@ var meetAddress;
 document.getElementById("welcome-student-button").onclick = sendInvitation;
 
 function sendInvitationToStudent(studentID) {
-    // TODO start 1 min timer
     var url = 'src/api.php/get-userId';
     var settings = {method: 'POST'};
 
@@ -125,19 +124,23 @@ function deleteUser(userId) {
 }
 
 function extractAnswer(invitationResponse) {
-    let answer = invitationResponse.split(" ")[2];
+    invitationResponse = JSON.parse(invitationResponse);
+    let answer = invitationResponse["answer"];
+
     return answer;
 }
 
-function extractReceiverId(invitationMessage) {
-    let receiverId = invitationMessage.split(" ")[1].
-                                        split(":")[1];
+function extractReceiverId(invitationResponse) {
+    invitationResponse = JSON.parse(invitationResponse);
+    let receiverId = invitationResponse["receiver_id"];
+
     return receiverId;
 }
 
-function extractSenderId(invitationMessage) {
-    let senderId = invitationMessage.split(" ")[0].
-                                        split(":")[1];
+function extractSenderId(invitationResponse) {
+    invitationResponse = JSON.parse(invitationResponse);
+    let senderId = invitationResponse["sender_id"];
+
     return senderId;
 }
 
