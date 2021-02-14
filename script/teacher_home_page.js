@@ -1,6 +1,9 @@
         
         updateView();
-        // document.getElementById("submitBtn").addEventListener("click", createMeet);
+        
+        setInterval(function() {
+            updateView();
+        }, 5000);
 
 
         function openForm(room) {
