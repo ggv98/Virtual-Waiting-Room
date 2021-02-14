@@ -4,8 +4,6 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const roomId = urlParams.get('roomId');
 
-// attach event handler onclick on the welcomeButton
-
 function updatePageDetails(){
 
     var url = 'src/api.php/get-room-details';
@@ -29,7 +27,7 @@ function updatePageDetails(){
 updatePageDetails()
 setInterval(function() {
     updatePageDetails();
- }, 10000);
+ }, 5000);
 
 function loadDeatails(response) {
     if (response['success']) {
@@ -77,25 +75,6 @@ function examHasStarted(room) {
     } else {
         return false;
     }
-}
-
-// TODO call it on interval of 1 min
-function updateStudentsQueue() {
-    if (thereIsStudentInTheRoom()) {
-        // get start time (maybe this would be some global var), compare with current time 
-        // and eventually offset other students
-    }
-}
-
-function thereIsStudentInTheRoom() {
-    // TODO
-    return false;
-}
-
-function onStudentEnter() {
-    // Set the view with his image and name
-    //   and cache the start time (and use it to check if there is already expiration of 
-    //   time, and if such expiration exists then offset all the rest students' starting exam hours)
 }
 
 function showWelcomeButton() {
