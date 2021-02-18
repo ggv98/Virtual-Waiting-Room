@@ -58,46 +58,46 @@
                     VALUES (:teacherID,	:title, :subject, :avgDuration, :message, :startTime, :endTime, :meetType,	:address)";
             $this->insertWaitingRoomStatement = $this->connection->prepare($sql);
 
-            $sql = "UPDATE waiting_room SET message=:message WHERE id=:id";
+            $sql = "UPDATE waiting_room SET message=:message WHERE id=:id  and isFinished=0";
             $this->updateWaitingRoomMsgStatement = $this->connection->prepare($sql);
             
-            $sql = "SELECT * FROM waiting_room";
+            $sql = "SELECT * FROM waiting_room WHERE isFinished=0";
             $this->selectAllWaitingRooms = $this->connection->prepare($sql);
 
-            $sql = "SELECT * FROM waiting_room WHERE teacherID = :teacherId";
+            $sql = "SELECT * FROM waiting_room WHERE teacherID = :teacherId and isFinished=0";
             $this->selectWaitingRoomsGivenTeacherIdStatement = $this->connection->prepare($sql);
 
-            $sql = "SELECT * FROM waiting_room WHERE id=:id";
+            $sql = "SELECT * FROM waiting_room WHERE id=:id and isFinished=0";
             $this->selectWaitingRoomByIdStatement = $this->connection->prepare($sql);
 
-            $sql = "DELETE FROM waiting_room WHERE endTime < NOW()";
+            $sql = "UPDATE waiting_room SET isFinished=1 WHERE endTime < NOW() and isFinished=0";
             $this->deleteExpiredWaitingRoomStatement = $this->connection->prepare($sql);
 
 
 
 
             //meet-record Statement
-            $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=:roomId";
+            $sql = "SELECT Max(meetTime) as time FROM meet_record WHERE roomID=:roomId and isFinished=0";
             $this->getLastStudentOnQueueStatement = $this->connection->prepare($sql);
 
-            $sql = "DELETE FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
+            $sql = "UPDATE meet_record SET isFinished=1 WHERE roomID=:roomId and studentID=:studentId and isFinished=0";
             $this->deleteMeetRecordStatement = $this->connection->prepare($sql);
 
             $sql = "INSERT INTO meet_record(roomID, studentID, meetTime, reason) VALUES (:roomId, :studentId, :meetTime, :reason)";
             $this->insertMeetRecordStatement = $this->connection->prepare($sql);
 
-            $sql = "SELECT * FROM meet_record WHERE roomID=:roomId and studentID=:studentId";
+            $sql = "SELECT * FROM meet_record WHERE roomID=:roomId and studentID=:studentId and isFinished=0";
             $this->selectMeetRecordByroomIdandStudentIdStatement = $this->connection->prepare($sql);
 
-            $sql = "SELECT students_info.firstName, students_info.lastName FROM meet_record JOIN students_info ON meet_record.studentID=students_info.userID WHERE roomID=:roomId";
+            $sql = "SELECT students_info.firstName, students_info.lastName FROM meet_record JOIN students_info ON meet_record.studentID=students_info.userID WHERE roomID=:roomId and isFinished=0";
             $this->selectStudentsGivenRoomIdStatement = $this->connection->prepare($sql);
 
             $sql = "SELECT * FROM meet_record JOIN students_info on studentID=userID 
-                                WHERE roomID=:roomId 
+                                WHERE roomID=:roomId and isFinished=0
                                 ORDER BY meetTime ASC";
             $this->getQueueByRoomIdStatement = $this->connection->prepare($sql);
 
-            $sql = "UPDATE meet_record SET meetTime = ADDTIME(meetTime, :delay) WHERE roomID = :id";
+            $sql = "UPDATE meet_record SET meetTime = ADDTIME(meetTime, :delay) WHERE roomID = :id and isFinished=0";
             $this->addDelayInQueueStatement = $this->connection->prepare($sql);
         }
         // USERS QUERY

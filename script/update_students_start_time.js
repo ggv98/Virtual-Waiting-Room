@@ -32,9 +32,10 @@ function getDelay(expectedStartTime) {
 
 function updateQueue(firstInQueueStartTime) {
     var delay = getDelay(firstInQueueStartTime);
+    var offset = 500;
 
     if (delay > 0) {
-        updateQueueGivenDelay(delay);
+        updateQueueGivenDelay(delay + offset);
     }
 }
 

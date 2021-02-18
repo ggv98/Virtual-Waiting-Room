@@ -13,7 +13,7 @@ update();
 
  setInterval(function() {
    update();
-}, 8000);
+}, 5000);
 
 
 

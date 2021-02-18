@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2021 at 11:29 AM
+-- Generation Time: Feb 18, 2021 at 09:06 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -31,15 +31,9 @@ CREATE TABLE `meet_record` (
   `roomID` int(11) NOT NULL,
   `studentID` int(11) NOT NULL,
   `meetTime` datetime NOT NULL,
-  `reason` varchar(128) NOT NULL
+  `reason` varchar(128) NOT NULL,
+  `isFinished` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `meet_record`
---
-
-INSERT INTO `meet_record` (`roomID`, `studentID`, `meetTime`, `reason`) VALUES
-(3, 28, '2021-01-27 11:42:57', 'Изпит');
 
 -- --------------------------------------------------------
 
@@ -64,7 +58,8 @@ CREATE TABLE `students_info` (
 --
 
 INSERT INTO `students_info` (`userID`, `firstName`, `lastName`, `degree`, `speciality`, `course`, `groupe`, `facultyNumber`, `Image`) VALUES
-(28, 'User', 'User', 'B', 'CS', 2, 8, '88888', 'Screenshot (4).png');
+(28, 'User', 'User', 'B', 'CS', 2, 8, '88888', 'Screenshot(20).jpg'),
+(29, 'ivan', 'ivan', 'B', 'mat', 1, 1, '81611', 'Screenshot (4).png');
 
 -- --------------------------------------------------------
 
@@ -123,16 +118,9 @@ CREATE TABLE `waiting_room` (
   `endTime` datetime NOT NULL,
   `meetType` tinyint(1) NOT NULL,
   `address` varchar(256) NOT NULL,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `isFinished` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `waiting_room`
---
-
-INSERT INTO `waiting_room` (`teacherID`, `title`, `subject`, `avgDuration`, `message`, `startTime`, `endTime`, `meetType`, `address`, `id`) VALUES
-(27, 'Изпит', 'WEB Технологии', 15, '', '2021-01-27 12:30:00', '2021-01-27 17:30:00', 0, 'https://meet.google.com/yon-myik-vvy', 3),
-(27, 'Консултация за проект', 'WEB Технологии', 15, '', '2021-01-27 09:30:00', '2021-01-27 12:30:00', 0, 'https://meet.google.com/yon-myik-vvy', 4);
 
 --
 -- Indexes for dumped tables
@@ -164,13 +152,13 @@ ALTER TABLE `waiting_room`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `waiting_room`
 --
 ALTER TABLE `waiting_room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

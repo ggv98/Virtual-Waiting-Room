@@ -25,7 +25,7 @@ function updatePageDetails(){
 updatePageDetails()
 setInterval(function() {
     updatePageDetails();
- }, 10000);
+ }, 5000);
 
 function loadDeatails(response){
     if (response['success'] && response['data']["currentUser"]){
